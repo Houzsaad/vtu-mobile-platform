@@ -1,13 +1,13 @@
-# # Python
-# __pycache__/
-# *.py[cod]
-# venv/
-# .venv/
-# .env
-# *.sqlite3
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.env
+*.sqlite3
 
-# # React Native / Node
-# node_modules/
-# .expo/
-# android/
-# ios/
+# React Native / Node
+node_modules/
+.expo/
+android/
+ios/
