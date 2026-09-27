@@ -1,0 +1,58 @@
+from rest_framework import serializers
+from django.contrib.auth.password_validation import validate_password
+from .models import User
+from .validators import validate_full_name, validate_username
+
+
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, min_length=8)
+    confirm_password = serializers.CharField(write_only=True)
+    pin = serializers.CharField(write_only=True, min_length=4, max_length=4)
+    confirm_pin = serializers.CharField(write_only=True, min_length=4, max_length=4)
+    full_name = serializers.CharField(validators=[validate_full_name])
+    username = serializers.CharField(validators=[validate_username])
+
+    class Meta:
+        model = User
+        fields = [
+            'full_name', 'username', 'email', 'phone_number',
+            'password', 'confirm_password', 'pin', 'confirm_pin',
+        ]
+
+    def validate_username(self, value):
+        if User.objects.filter(username__iexact=value).exists():
+            raise serializers.ValidationError("This username is already taken.")
+        return value
+
+    def validate_email(self, value):
+        if User.objects.filter(email__iexact=value).exists():
+            raise serializers.ValidationError("This email is already registered.")
+        return value
+
+    def validate_password(self, value):
+        validate_password(value)
+        return value
+
+    def validate_pin(self, value):
+        if not value.isdigit():
+            raise serializers.ValidationError("PIN must contain only numbers.")
+        return value
+
+    def validate(self, data):
+        if data['password'] != data['confirm_password']:
+            raise serializers.ValidationError({"confirm_password": "Passwords do not match."})
+        if data['pin'] != data['confirm_pin']:
+            raise serializers.ValidationError({"confirm_pin": "PINs do not match."})
+        return data
+
+    def create(self, validated_data):
+        validated_data.pop('confirm_password')
+        validated_data.pop('confirm_pin')
+        pin = validated_data.pop('pin')
+        password = validated_data.pop('password')
+
+        user = User(**validated_data)
+        user.set_password(password)
+        user.set_pin(pin)
+        user.save()
+        return user
