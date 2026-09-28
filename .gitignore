@@ -5,9 +5,3 @@ venv/
 .venv/
 .env
 *.sqlite3
-
-# React Native / Node
-node_modules/
-.expo/
-android/
-ios/
