@@ -30,12 +30,17 @@ export default function Register() {
     }
   };
 
+    const handlePhoneChange = (e) => {
+    const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 11);
+    setFormData({ ...formData, phone_number: digitsOnly });
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <input name="full_name" placeholder="Full Name" onChange={handleChange} />
       <input name="username" placeholder="Username" onChange={handleChange} />
       <input name="email" placeholder="Email" onChange={handleChange} />
-      <input name="phone_number" placeholder="Phone Number" onChange={handleChange} />
+      <input name="phone_number" placeholder="Phone Number" value={formData.phone_number} onChange={handlePhoneChange} inputMode="numeric" />
       <input name="password" type="password" placeholder="Password" onChange={handleChange} />
       <input name="confirm_password" type="password" placeholder="Confirm Password" onChange={handleChange} />
       <input name="pin" type="password" maxLength={4} placeholder="PIN" onChange={handleChange} />
