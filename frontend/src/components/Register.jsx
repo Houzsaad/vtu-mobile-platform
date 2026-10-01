@@ -13,19 +13,22 @@ export default function Register() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
-  setErrors({});
-  try {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log('handleSubmit fired', formData);
     const result = await apiPost('/accounts/register/', formData);
-    console.log('Registered:', result);
-  } catch (err) {
-    setErrors(err.data || { detail: 'Something went wrong' });
-  } finally {
-    setLoading(false);
-  }
-};
+    setLoading(true);
+    setErrors({});
+    try {
+      const result = await apiPost('/accounts/register/', formData);
+      console.log('Registered:', result);
+    } catch (err) {
+      console.log('Error:', err);
+      setErrors(err.data || { detail: 'Something went wrong' });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
