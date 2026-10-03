@@ -91,3 +91,8 @@ Each feature follows this flow before moving to the next:
 3. Add styling → test again
 
 One feature at a time — no rushing.
+
+
+## Author
+
+**Huzaifa Sa'ad** ([@Houzsaad](https://github.com/Houzsaad))
