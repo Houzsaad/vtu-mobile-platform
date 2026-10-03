@@ -1,16 +1,92 @@
-# React + Vite
+# VTU App — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+React frontend for the VTU app, built with Vite. Talks to the Django REST API in `../backend`.
 
-Currently, two official plugins are available:
+> 🚧 **Status: Early development.** Registration screen is complete (built, tested, and styled). Other screens are planned.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Tech Stack
 
-## React Compiler
+- **React** (Vite)
+- **react-router-dom** — routing between screens
+- **fetch()** — API calls (no axios)
+- Plain CSS with shared design tokens (`src/index.css`)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Project Structure
 
-## Expanding the Oxlint configuration
+```
+frontend/
+├── src/
+│   ├── api.jsx              # fetch wrapper for API calls
+│   ├── components/
+│   │   └── Register.jsx     # registration screen
+│   │   └── Register.css
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css            # global styles & design tokens
+├── index.html
+└── package.json
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Screens
+
+### ✅ Done
+- [x] **Register** — full name, username, email, phone number, password, confirm password, 4-digit PIN, confirm PIN. Validates against the backend's rules (phone format, password complexity, PIN confirmation) and displays field-level errors returned by the API.
+
+### 🚧 Planned
+- [ ] Login
+- [ ] Logout
+- [ ] Forgot Password
+- [ ] Change Password
+- [ ] Profile
+- [ ] Dashboard (wallet balance, quick actions)
+- [ ] Buy Airtime
+- [ ] Buy Data
+- [ ] Transaction history
+- [ ] PWA setup (manifest, service worker, installable)
+
+## Screenshot
+
+_Registration screen:_
+
+
+## Registration UI
+<p align="center">
+    <img src="register-ui.png" width="390"/>
+</p>
+
+
+## Local Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+App runs at `http://localhost:5173` by default.
+
+Make sure the backend is running at `http://127.0.0.1:8000` (see `../backend/README.md`) — the API base URL is set in `src/api.jsx`.
+
+## API Connection
+
+All requests go through `apiPost()` in `src/api.jsx`:
+
+```js
+const BASE_URL = 'http://127.0.0.1:8000/api';
+```
+
+Update this when pointing at a deployed backend instead of local.
+
+## Design System
+
+Shared tokens live in `src/index.css` (colors, radius, font) and are reused across every screen's own CSS file, so new screens stay consistent without repeating the same values.
+
+## Build Approach
+
+Each feature follows this flow before moving to the next:
+
+1. Build the Django API endpoint → test it
+2. Build the React UI → test integration
+3. Add styling → test again
+
+One feature at a time — no rushing.
