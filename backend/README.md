@@ -122,11 +122,11 @@ RESEND_API_KEY=
 
 ### Build Approach
 
-- Each feature follows this flow before moving to the next:
-- Build the Django API endpoint → test it
-- Build the React UI → test integration
-- Add styling → test again
-- One feature at a time — no rushing.
+1. Each feature follows this flow before moving to the next:
+2. Build the Django API endpoint → test it
+3. Build the React UI → test integration
+4. Add styling → test again
+5. One feature at a time — no rushing.
 
 **Author:**
 `Huzaifa Sa'ad (Houzsaad)`
