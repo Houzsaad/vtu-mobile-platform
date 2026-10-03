@@ -128,5 +128,5 @@ RESEND_API_KEY=
 - Add styling → test again
 - One feature at a time — no rushing.
 
-**Author**
+**Author:**
 `Huzaifa Sa'ad (Houzsaad)`
