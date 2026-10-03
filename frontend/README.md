@@ -50,8 +50,9 @@ _Registration screen:_
 
 
 ## Registration UI
+
 <p align="center">
-    <img src="registration.png" width="390"/>
+    <img src="registration-ui.png" width="390"/>
 </p>
 
 
