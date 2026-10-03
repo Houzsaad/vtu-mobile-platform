@@ -77,6 +77,11 @@ API will be available at http://127.0.0.1:8000/.
 
 API Documentation
 
+## Registration endpoint
+<p align="center">
+    <img src="api-docs.png" width="250"/>
+</p>
+
 Once the server is running:
 
 Swagger UI: /api/docs/
