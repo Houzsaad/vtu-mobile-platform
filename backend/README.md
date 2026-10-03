@@ -99,7 +99,7 @@ API will be available at ```http://127.0.0.1:8000/```
 
 ## Registration endpoint
 <p align="center">
-    <img src="api-docs.png" width="350"/>
+    <img src="api-docs.png" width="390"/>
 </p>
 
 Once the server is running:
@@ -110,7 +110,7 @@ Redoc: /api/redoc/
 Raw schema: /api/schema/
 ```
 
-## BEnvironment Variables
+## Environment Variables
 Copy `.env.example to .env and fill in real values (never commit .env):`
 
 ```text
@@ -122,16 +122,11 @@ RESEND_API_KEY=
 
 ### Build Approach
 
-Each feature follows this flow before moving to the next:
+- Each feature follows this flow before moving to the next:
+- Build the Django API endpoint → test it
+- Build the React UI → test integration
+- Add styling → test again
+- One feature at a time — no rushing.
 
-Build the Django API endpoint → test it
-
-Build the React UI → test integration
-
-Add styling → test again
-
-One feature at a time — no rushing.
-
-Author
-
-Huzaifa Sa'ad (Houzsaad)
+**Author**
+`Huzaifa Sa'ad (Houzsaad)`
