@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { apiPost } from '../api';
 import './Register.css';
-
+import PasswordInput from './PasswordInput';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -48,10 +48,10 @@ export default function Register() {
           <input name="username" placeholder="Username" onChange={handleChange} />
           <input name="email" placeholder="Email" onChange={handleChange} />
           <input name="phone_number" placeholder="Phone number" value={formData.phone_number} onChange={handlePhoneChange} inputMode="numeric" />
-          <input name="password" type="password" placeholder="Password" onChange={handleChange} />
-          <input name="confirm_password" type="password" placeholder="Confirm password" onChange={handleChange} />
-          <input name="pin" type="password" maxLength={4} placeholder="4-digit PIN" onChange={handleChange} />
-          <input name="confirm_pin" type="password" maxLength={4} placeholder="Confirm PIN" onChange={handleChange} />
+          <PasswordInput name="password" placeholder="Password" value={formData.password} onChange={handleChange} />
+          <PasswordInput name="confirm_password" placeholder="Confirm password" value={formData.confirm_password} onChange={handleChange} />
+          <PasswordInput name="pin" placeholder="4-digit PIN" value={formData.pin} onChange={handleChange} maxLength={4} />
+          <PasswordInput name="confirm_pin" placeholder="Confirm PIN" value={formData.confirm_pin} onChange={handleChange} maxLength={4} />
           <button type="submit" className="register-submit" disabled={loading}>
             {loading ? 'Registering...' : 'Create account'}
           </button>
