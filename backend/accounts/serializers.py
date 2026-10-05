@@ -2,7 +2,8 @@ from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 from .models import User
 from .validators import validate_full_name, validate_username
-
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from wallet.models import Wallet
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
@@ -18,6 +19,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             'full_name', 'username', 'email', 'phone_number',
             'password', 'confirm_password', 'pin', 'confirm_pin',
         ]
+
+      #  read_only_fields = ['username', 'email', 'pin', 'wallet', 'passsord']
 
     def validate_username(self, value):
         if User.objects.filter(username__iexact=value).exists():
@@ -56,3 +59,14 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_pin(pin)
         user.save()
         return user
+
+
+
+class LoginSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        data = super().validate(attrs)
+        wallet, _ = Wallet.objects.get_or_create(user=self.user)
+        data['full_name'] = self.user.full_name
+        data['username'] = self.user.username
+        data['wallet_balance'] = str(self.user.wallet.balance)
+        return data
