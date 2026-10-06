@@ -6,6 +6,15 @@ import './Profile.css';
 export default function Profile() {
   const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
+  const [showBalance, setShowBalance] = useState(
+    localStorage.getItem('balance_hidden') !== 'true'
+  );
+
+  const toggleBalance = () => {
+  const next = !showBalance;
+  setShowBalance(next);
+    localStorage.setItem('balance_hidden', next ? 'false' : 'true');
+  };
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -38,7 +47,19 @@ export default function Profile() {
 
       <div className="profile-balance-card">
         <p className="profile-balance-label">Wallet balance</p>
-        <p className="profile-balance-amount">₦{profile.wallet_balance}</p>
+      <div className="profile-balance-row">
+      <p className="profile-balance-amount">
+        {showBalance ? `₦${profile.wallet_balance}` : '₦ • • • • • •'}
+      </p>
+      <button
+        type="button"
+        className="wallet-toggle"
+        onClick={toggleBalance}
+        aria-label={showBalance ? 'Hide balance' : 'Show balance'}
+      >
+        {showBalance ? '👁️' : '🙈'}
+      </button>
+      </div>
       </div>
 
       <div className="profile-actions">

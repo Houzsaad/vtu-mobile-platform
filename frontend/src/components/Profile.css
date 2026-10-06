@@ -91,3 +91,14 @@
   margin-top: 60px;
   color: var(--text-secondary);
 }
+
+.profile-balance-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.profile-balance-row .profile-balance-amount {
+  margin: 0;
+}
