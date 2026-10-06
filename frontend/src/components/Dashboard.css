@@ -1,0 +1,133 @@
+.dashboard-page {
+  min-height: 100vh;
+  padding: 20px 16px 90px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.dashboard-greeting {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.dashboard-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 2px 0 0;
+}
+
+.dashboard-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.wallet-card {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 14px;
+  padding: 18px;
+  margin-bottom: 20px;
+}
+
+.wallet-label {
+  font-size: 13px;
+  opacity: 0.85;
+  margin: 0;
+}
+
+.wallet-amount {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 4px 0 12px;
+}
+
+.wallet-fund-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: #fff;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.section-title {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin: 0 0 8px;
+}
+
+.services-section {
+  margin-bottom: 20px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.service-item {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.transactions-section {
+  margin-bottom: 20px;
+}
+
+.transactions-empty {
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+  padding: 20px 0;
+}
+
+.dashboard-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface-2);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+}
+
+.nav-item {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  cursor: default;
+}
+
+.nav-item.active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.dashboard-loading {
+  text-align: center;
+  margin-top: 60px;
+  color: var(--text-secondary);
+}
