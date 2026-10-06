@@ -12,6 +12,9 @@ function App() {
       <Route path="/" element={<Register />} />
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<Profile />} />
+      s
+      <Route path="/change-password" element={<p>Change password coming soon</p>} />
+      <Route path="/change-pin" element={<p>Change PIN coming soon</p>} />
     </Routes>
   );
 }
