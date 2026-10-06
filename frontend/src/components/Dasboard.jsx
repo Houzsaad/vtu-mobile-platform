@@ -5,9 +5,17 @@ import './Dashboard.css';
 
 export default function Dashboard() {
   const [profile, setProfile] = useState(null);
-  const [showBalance, setShowBalance] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [showBalance, setShowBalance] = useState(
+    localStorage.getItem('balance_hidden') !== 'true'
+  );
+
+  const toggleBalance = () => {
+  const next = !showBalance;
+  setShowBalance(next);
+    localStorage.setItem('balance_hidden', next ? 'false' : 'true');
+  };
 
   useEffect(() => {
     const token = localStorage.getItem('access_token');
@@ -46,7 +54,7 @@ export default function Dashboard() {
           <button
             type="button"
             className="wallet-toggle"
-            onClick={() => setShowBalance(!showBalance)}
+            onClick={toggleBalance}
             aria-label={showBalance ? 'Hide balance' : 'Show balance'}
           >
             {showBalance ? '👁️' : '🙈'}
