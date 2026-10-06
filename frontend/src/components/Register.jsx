@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { apiPost } from '../api';
 import './Register.css';
 import PasswordInput from './PasswordInput';
+import { Link } from 'react-router-dom';
+
+
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -55,6 +58,10 @@ export default function Register() {
           <button type="submit" className="register-submit" disabled={loading}>
             {loading ? 'Registering...' : 'Create account'}
           </button>
+          
+          <p className="auth-switch">
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
         </form>
         {Object.keys(errors).length > 0 && (
           <div className="register-errors">

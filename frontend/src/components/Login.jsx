@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { apiPost } from '../api';
 import PasswordInput from './PasswordInput';
-import './Login.css';
+import './Register.css';
+
 
 export default function Login() {
   const [formData, setFormData] = useState({ username: '', password: '' });
