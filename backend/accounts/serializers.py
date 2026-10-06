@@ -70,3 +70,13 @@ class LoginSerializer(TokenObtainPairSerializer):
         data['username'] = self.user.username
         data['wallet_balance'] = str(self.user.wallet.balance)
         return data
+
+class ProfileSerializer(serializers.ModelSerializer):
+    wallet_balance = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['full_name', 'username', 'email', 'phone_number', 'wallet_balance']
+
+    def get_wallet_balance(self, obj):
+        return str(obj.wallet.balance)

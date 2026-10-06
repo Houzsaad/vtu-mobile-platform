@@ -2,6 +2,14 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from .serializers import RegisterSerializer, LoginSerializer
 
+from rest_framework_simplejwt.views import TokenObtainPairView
+from .serializers import LoginSerializer
+
+
+
+from rest_framework.permissions import IsAuthenticated
+from .serializers import ProfileSerializer
+
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
@@ -16,11 +24,14 @@ class RegisterView(generics.CreateAPIView):
         )
 
 
-from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import LoginSerializer
-
-
 class LoginView(TokenObtainPairView):
     serializer_class = LoginSerializer
 
+
+class ProfileView(generics.RetrieveAPIView):
+    serializer_class = ProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
 # Create your views here.
