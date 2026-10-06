@@ -131,3 +131,24 @@
   margin-top: 60px;
   color: var(--text-secondary);
 }
+
+.wallet-amount-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 12px;
+}
+
+.wallet-amount-row .wallet-amount {
+  margin: 0;
+}
+
+.wallet-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+  line-height: 1;
+  opacity: 0.85;
+}

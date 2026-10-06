@@ -5,6 +5,7 @@ import './Dashboard.css';
 
 export default function Dashboard() {
   const [profile, setProfile] = useState(null);
+  const [showBalance, setShowBalance] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -23,7 +24,7 @@ export default function Dashboard() {
   }, [navigate]);
 
   if (!profile) return <p className="dashboard-loading">Loading...</p>;
-
+  
   return (
     <div className="dashboard-page">
       <header className="dashboard-header">
@@ -38,7 +39,19 @@ export default function Dashboard() {
 
       <div className="wallet-card">
         <p className="wallet-label">💰 Wallet balance</p>
-        <p className="wallet-amount">₦{profile.wallet_balance}</p>
+        <div className="wallet-amount-row">
+          <p className="wallet-amount">
+            {showBalance ? `₦${profile.wallet_balance}` : '₦ • • • • • •'}
+          </p>
+          <button
+            type="button"
+            className="wallet-toggle"
+            onClick={() => setShowBalance(!showBalance)}
+            aria-label={showBalance ? 'Hide balance' : 'Show balance'}
+          >
+            {showBalance ? '👁️' : '🙈'}
+          </button>
+        </div>
         <button className="wallet-fund-btn">Fund wallet</button>
       </div>
 
