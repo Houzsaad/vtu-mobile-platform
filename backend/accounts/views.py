@@ -5,6 +5,8 @@ from .serializers import RegisterSerializer, LoginSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .serializers import LoginSerializer
 
+from .serializers import ChangePasswordSerializer
+
 
 
 from rest_framework.permissions import IsAuthenticated
@@ -34,4 +36,14 @@ class ProfileView(generics.RetrieveAPIView):
 
     def get_object(self):
         return self.request.user
+
+class ChangePasswordView(generics.GenericAPIView):
+    serializer_class = ChangePasswordSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"message": "Password changed successfully."}, status=status.HTTP_200_OK)
 # Create your views here.
