@@ -19,26 +19,24 @@ export default function Register() {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log('handleSubmit fired', formData);
+  e.preventDefault();
+  setLoading(true);
+  setErrors({});
+  try {
     const result = await apiPost('/accounts/register/', formData);
+    console.log('Registered:', result);
     navigate('/login');
-    setErrors({});
-    try {
-      const result = await apiPost('/accounts/register/', formData);
-      console.log('Registered:', result);
-    } catch (err) {
-      console.log('Error:', err);
-      setErrors(err.data || { detail: 'Something went wrong' });
-    } finally {
-      setLoading(false);
+  } catch (err) {
+    console.log('Error:', err);
+    setErrors(err.data || { detail: 'Something went wrong' });
+  } finally {
+    setLoading(false);
     }
   };
 
-    const handlePhoneChange = (e) => {
-    const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 11);
+  const handlePhoneChange = (e) => {
+  const digitsOnly = e.target.value.replace(/\D/g, '').slice(0, 11);
     setFormData({ ...formData, phone_number: digitsOnly });
   };
 
