@@ -103,6 +103,14 @@ class ChangePasswordSerializer(serializers.Serializer):
             raise serializers.ValidationError({"confirm_new_password": "Passwords doesn't match."})
         return data
 
+    def validate(self, data):
+        if data['new_password'] != data['confirm_new_password']:
+            raise serializers.ValidationError({"confirm_new_password": "Passwords do not match."})
+        user = self.context['request'].user
+        if user.check_password(data['new_password']):
+            raise serializers.ValidationError({"new_password": "New password cannot be the same as your current password."})
+        return data    
+
     def save(self):
         user = self.context['request'].user
         user.set_password(self.validated_data['new_password'])
@@ -128,6 +136,14 @@ class ChangePinSerializer(serializers.Serializer):
     def validate(self, data):
         if data['new_pin'] != data['confirm_new_pin']:
             raise serializers.ValidationError({"confirm_new_pin": "PINs do not match."})
+        return data
+
+    def validate(self, data):
+        if data['new_pin'] != data['confirm_new_pin']:
+            raise serializers.ValidationError({"confirm_new_pin": "PINs do not match."})
+        user = self.context['request'].user
+        if user.check_pin(data['new_pin']):
+            raise serializers.ValidationError({"new_pin": "New PIN cannot be the same as your current PIN."})
         return data
 
     def save(self):
