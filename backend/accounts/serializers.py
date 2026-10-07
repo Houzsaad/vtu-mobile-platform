@@ -100,7 +100,7 @@ class ChangePasswordSerializer(serializers.Serializer):
 
     def validate(self, data):
         if data['new_password'] != data['confirm_new_password']:
-            raise serializers.ValidationError({"confirm_new_password": "Passwords do not match."})
+            raise serializers.ValidationError({"confirm_new_password": "Passwords doesn't match."})
         return data
 
     def save(self):
