@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Dashboard from './components/Dasboard';
 import Profile from './components/Profile';
 import ChangePassword from './components/ChangePassword';
+import ChangePin from './components/ChangePIN';
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
       <Route path="/profile" element={<Profile />} />
       
       <Route path="/change-password" element={<ChangePassword />} />
-      <Route path="/change-pin" element={<p>Change PIN coming soon</p>} />
+      <Route path="/change-pin" element={<ChangePin />} />
       
     </Routes>
   );
