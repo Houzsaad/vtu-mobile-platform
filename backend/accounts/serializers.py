@@ -108,3 +108,30 @@ class ChangePasswordSerializer(serializers.Serializer):
         user.set_password(self.validated_data['new_password'])
         user.save()
         return user
+
+class ChangePinSerializer(serializers.Serializer):
+    current_pin = serializers.CharField(write_only=True, min_length=4, max_length=4)
+    new_pin = serializers.CharField(write_only=True, min_length=4, max_length=4)
+    confirm_new_pin = serializers.CharField(write_only=True, min_length=4, max_length=4)
+
+    def validate_current_pin(self, value):
+        user = self.context['request'].user
+        if not user.check_pin(value):
+            raise serializers.ValidationError("Current PIN is incorrect.")
+        return value
+
+    def validate_new_pin(self, value):
+        if not value.isdigit():
+            raise serializers.ValidationError("PIN must contain only numbers.")
+        return value
+
+    def validate(self, data):
+        if data['new_pin'] != data['confirm_new_pin']:
+            raise serializers.ValidationError({"confirm_new_pin": "PINs do not match."})
+        return data
+
+    def save(self):
+        user = self.context['request'].user
+        user.set_pin(self.validated_data['new_pin'])
+        user.save()
+        return user
