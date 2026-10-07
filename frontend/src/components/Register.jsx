@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { apiPost } from '../api';
+import { useNavigate } from 'react-router-dom';
 import './Register.css';
 import PasswordInput from './PasswordInput';
 import { Link } from 'react-router-dom';
@@ -13,6 +14,7 @@ export default function Register() {
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,7 +24,7 @@ export default function Register() {
     e.preventDefault();
     console.log('handleSubmit fired', formData);
     const result = await apiPost('/accounts/register/', formData);
-    setLoading(true);
+    navigate('/login');
     setErrors({});
     try {
       const result = await apiPost('/accounts/register/', formData);
@@ -55,6 +57,7 @@ export default function Register() {
           <PasswordInput name="confirm_password" placeholder="Confirm password" value={formData.confirm_password} onChange={handleChange} />
           <PasswordInput name="pin" placeholder="4-digit PIN" value={formData.pin} onChange={handleChange} maxLength={4} />
           <PasswordInput name="confirm_pin" placeholder="Confirm PIN" value={formData.confirm_pin} onChange={handleChange} maxLength={4} />
+          
           <button type="submit" className="register-submit" disabled={loading}>
             {loading ? 'Registering...' : 'Create account'}
           </button>

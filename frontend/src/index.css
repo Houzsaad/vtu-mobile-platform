@@ -27,3 +27,30 @@ input, button {
   font-family: inherit;
   font-size: 14px;
 }
+
+/* Dark and Light Mode  */
+
+[data-theme="dark"] {
+  --surface-1: #15151c;
+  --surface-2: #1e1e28;
+  --text-primary: #f0f0f5;
+  --text-secondary: #a0a0ab;
+  --border: #30303c;
+  --border-strong: #45454f;
+  --accent: #4a6fa5;
+  --accent-hover: #5c82b8;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 100;
+}
