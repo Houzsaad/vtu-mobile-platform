@@ -31,14 +31,17 @@ frontend/
 
 ### ✅ Done
 - [x] **Register** — full name, username, email, phone number, password, confirm password, 4-digit PIN, confirm PIN. Validates against the backend's rules (phone format, password complexity, PIN confirmation) and displays field-level errors returned by the API.
+- [x] **Login** — username and password, JWT-based, with show/hide password toggle and loading state.
+- [x] **Logout**
+- [x] **Dashboard** — wallet balance with hide/unhide, quick navigation, and service shortcuts.
+- [x] **Profile** — account details, wallet balance (follows the dashboard's hide setting), and customer care link.
+- [x] **Change Password** — enforces the password rules and rejects reusing the old password.
+- [x] **Change Transaction PIN** — 4-digit numeric PIN, rejects reusing the old PIN.
+- [x] **Light/dark mode** — sun/moon toggle, remembered between visits.
 
 ### 🚧 Planned
-- [ ] Login
-- [ ] Logout
-- [ ] Forgot Password
-- [ ] Change Password
-- [ ] Profile
-- [ ] Dashboard (wallet balance, quick actions)
+- [ ] Forgot Password (needs a verified domain for OTP emails)
+- [ ] Fund wallet (virtual account details)
 - [ ] Buy Airtime
 - [ ] Buy Data
 - [ ] Transaction history
