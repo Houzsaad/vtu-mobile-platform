@@ -61,6 +61,34 @@ frontend/
     <img src="registration-ui.png" width="390"/>
 </p>
 
+
+### Login
+
+<p align="center">
+    <img src="login-page.png" width="390"/>
+</p>
+
+
+
+### Dashboard
+
+<p align="center">
+    <img src="dasboard-page.png" width="390"/>
+</p>
+
+### Profile
+
+<p align="center">
+    <img src="profile-page.png" width="390"/>
+</p>
+
+### Change Password
+
+<p align="center">
+    <img src="change-password.png" width="390"/>
+</p>
+
+
 ## Local Setup
 
 ```bash
