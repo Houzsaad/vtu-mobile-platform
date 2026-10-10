@@ -73,7 +73,7 @@ frontend/
 ### Dashboard
 
 <p align="center">
-    <img src="dasboard-page.png" width="390"/>
+    <img src="dashboard-page.png" width="390"/>
 </p>
 
 ### Profile
