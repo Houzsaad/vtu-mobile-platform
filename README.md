@@ -62,11 +62,11 @@ One feature at a time — no rushing.
 
 - [x] Project structure
 - [x] Accounts: Register (API + UI + styling, tested)
-- [ ] Accounts: Login
-- [ ] Accounts: Logout
+- [x] Accounts: Login
+- [x] Accounts: Logout
+- [x] Accounts: Change Password
+- [x] Accounts: Profile
 - [ ] Accounts: Forgot Password
-- [ ] Accounts: Change Password
-- [ ] Accounts: Profile
 - [ ] Wallet
 - [ ] Wallet funding
 - [ ] Transactions
