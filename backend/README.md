@@ -57,12 +57,12 @@ vtu-app/
 ### 🚧 Planned
 
 
--  Login (username + password, JWT-based)
- - Logout
+ - ✅ login (username + password, JWT-based)
+ - ✅ Logout
+ - ✅ Change Password
+ - ✅ Forgot PIN
+ - ✅ User Profile endpoint
  - Forgot Password (OTP via Resend, reset flow)
- - Change Password
- - Forgot PIN
- - User Profile endpoint
  - Wallet funding (payment provider integration)
  - Transaction history
  - Airtime purchase
