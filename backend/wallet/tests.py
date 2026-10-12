@@ -8,6 +8,8 @@ from .services import DuplicateReferenceMismatch, credit_wallet
 
 from .services import DuplicateReferenceMismatch, InsufficientFunds, credit_wallet, debit_wallet
 
+from rest_framework.test import APIClient
+
 User = get_user_model()
 
 
@@ -100,5 +102,21 @@ class CreditWalletTests(TestCase):
         with self.assertRaises(ValueError):
             self.debit(self.w1, txn_type=Transaction.Type.DEPOSIT)
 
-    
+class TransactionHistoryTests(CreditWalletTests):
+    def test_user_sees_only_own_transactions(self):
+        self.credit(self.w1, ref='mine')
+        self.credit(self.w2, ref='theirs')
+
+        client = APIClient()
+        client.force_authenticate(user=self.w1.user)
+        response = client.get('/api/wallet/transactions/')
+
+        self.assertEqual(response.status_code, 200)
+        references = [row['reference'] for row in response.data['results']]
+        self.assertEqual(references, ['mine'])
+
+    def test_history_requires_login(self):
+        response = APIClient().get('/api/wallet/transactions/')
+        self.assertEqual(response.status_code, 401)
+
 # Create your tests here.
