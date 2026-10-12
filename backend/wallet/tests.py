@@ -6,10 +6,13 @@ from django.test import TestCase
 from .models import Transaction
 from .services import DuplicateReferenceMismatch, credit_wallet
 
+from .services import DuplicateReferenceMismatch, InsufficientFunds, credit_wallet, debit_wallet
+
 User = get_user_model()
 
 
 class CreditWalletTests(TestCase):
+    
     def make_wallet(self, n):
         user = User.objects.create_user(
             username=f'user{n}', email=f'user{n}@test.com', password='Test1234!',
@@ -55,4 +58,47 @@ class CreditWalletTests(TestCase):
         for bad in ('0', '-5', '10.005'):
             with self.assertRaises(ValueError):
                 self.credit(self.w1, amount=bad, ref=f'bad{bad}')
+    
+    def debit(self, wallet, amount='200.00', ref='buy1', txn_type=Transaction.Type.AIRTIME):
+        return debit_wallet(
+            wallet_id=wallet.id, amount=amount, txn_type=txn_type, provider='vtpass', reference=ref
+        )
+
+    def test_debit_reduces_balance_and_writes_ledger_row(self):
+        self.credit(self.w1)
+        txn, created = self.debit(self.w1)
+        self.w1.refresh_from_db()
+        self.assertTrue(created)
+        self.assertEqual(self.w1.balance, Decimal('300.00'))
+        self.assertEqual(txn.type, Transaction.Type.AIRTIME)
+        self.assertEqual(txn.balance_after, Decimal('300.00'))
+
+    def test_debit_cannot_exceed_balance(self):
+        self.credit(self.w1, amount='100.00')
+        with self.assertRaises(InsufficientFunds):
+            self.debit(self.w1, amount='200.00')
+        self.w1.refresh_from_db()
+        self.assertEqual(self.w1.balance, Decimal('100.00'))
+        self.assertEqual(Transaction.objects.filter(type=Transaction.Type.AIRTIME).count(), 0)
+
+    def test_same_purchase_reference_debits_once(self):
+        self.credit(self.w1)
+        self.debit(self.w1)
+        _, created = self.debit(self.w1)
+        self.w1.refresh_from_db()
+        self.assertFalse(created)
+        self.assertEqual(self.w1.balance, Decimal('300.00'))
+
+    def test_same_purchase_reference_different_amount_is_blocked(self):
+        self.credit(self.w1)
+        self.debit(self.w1)
+        with self.assertRaises(DuplicateReferenceMismatch):
+            self.debit(self.w1, amount='250.00')
+
+    def test_debit_rejects_deposit_type(self):
+        self.credit(self.w1)
+        with self.assertRaises(ValueError):
+            self.debit(self.w1, txn_type=Transaction.Type.DEPOSIT)
+
+    
 # Create your tests here.
