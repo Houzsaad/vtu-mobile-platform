@@ -49,7 +49,7 @@ export default function Dashboard() {
         <p className="wallet-label">💰 Wallet balance</p>
         <div className="wallet-amount-row">
           <p className="wallet-amount">
-            {showBalance ? `₦${profile.wallet_balance}` : '₦ • • • • • •'}
+            {showBalance ? `₦${profile.wallet_balance}` : '₦ • • • • •'}
           </p>
           <button
             type="button"
@@ -79,7 +79,7 @@ export default function Dashboard() {
       <nav className="dashboard-nav">
         <Link to="/dashboard" className="nav-item active">🏠 Home</Link>
         <span className="nav-item">💳 Fund</span>
-        <span className="nav-item">📜 History</span>
+        <Link to="/history" className="nav-item">📜 History</Link>
         <Link to="/profile" className="nav-item">👤 Profile</Link>
       </nav>
     </div>

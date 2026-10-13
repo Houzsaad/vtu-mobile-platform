@@ -6,6 +6,7 @@ import Profile from './components/Profile';
 import ChangePassword from './components/ChangePassword';
 import ChangePin from './components/ChangePIN';
 import ThemeToggle from './components/ThemeToggle';
+import History from './components/History';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/change-pin" element={<ChangePin />} />
+        <Route path="/history" element={<History />} />
       </Routes>
     </>
   );

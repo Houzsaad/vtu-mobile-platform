@@ -1,0 +1,96 @@
+.history-page {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.history-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.history-back {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: var(--text);
+}
+
+.history-title {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.history-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+.history-type {
+  font-weight: 600;
+}
+
+.history-meta {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 2px;
+  word-break: break-all;
+}
+
+.history-right {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.history-amount {
+  font-weight: 700;
+}
+
+.history-amount.credit {
+  color: var(--success);
+}
+
+.history-amount.debit {
+  color: var(--danger);
+}
+
+.history-balance {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.history-empty,
+.history-error {
+  text-align: center;
+  color: var(--muted);
+  padding: 32px 0;
+}
+
+.history-more {
+  display: block;
+  margin: 16px auto 0;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+}
