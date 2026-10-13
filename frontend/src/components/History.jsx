@@ -4,10 +4,12 @@ import { apiGet } from '../api';
 
 import './History.css';
 
-const fmt = (value) =>
-  Number(value).toLocaleString('en-NG', { minimumFractionDigits: 2 });
+import TransactionRow from './TransactionRow';
 
-const LABELS = { deposit: 'Deposit', airtime: 'Airtime', data: 'Data' };
+// const fmt = (value) =>
+//   Number(value).toLocaleString('en-NG', { minimumFractionDigits: 2 });
+
+// const LABELS = { deposit: 'Deposit', airtime: 'Airtime', data: 'Data' };
 
 function History() {
   const navigate = useNavigate();
@@ -57,27 +59,9 @@ function History() {
         <p className="history-empty">No transactions yet.</p>
       )}
 
-      <ul className="history-list">
-        {items.map((t) => {
-          const isCredit = t.type === 'deposit';
-          return (
-            <li key={t.id} className="history-item">
-              <div>
-                <div className="history-type">{LABELS[t.type] || t.type}</div>
-                <div className="history-meta">{new Date(t.created_at).toLocaleString()}</div>
-                {t.recipient && <div className="history-meta">To: {t.recipient}</div>}
-                <div className="history-meta">Ref: {t.reference}</div>
-              </div>
-              <div className="history-right">
-                <div className={`history-amount ${isCredit ? 'credit' : 'debit'}`}>
-                  {isCredit ? '+' : '−'}₦{fmt(t.amount)}
-                </div>
-                <div className="history-balance">Balance ₦{fmt(t.balance_after)}</div>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      {items.map((t) => (
+        <TransactionRow key={t.id} t={t} />
+      ))}
 
       {loading && <p className="history-empty">Loading...</p>}
       {hasMore && !loading && (

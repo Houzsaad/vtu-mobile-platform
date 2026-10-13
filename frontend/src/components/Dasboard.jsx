@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { apiGet } from '../api';
 import './Dashboard.css';
+import RecentTransactions from './RecentTransactions';
+
 
 export default function Dashboard() {
   const [profile, setProfile] = useState(null);
@@ -71,11 +73,8 @@ export default function Dashboard() {
         </div>
       </section>
 
-      <section className="transactions-section">
-        <p className="section-title">Recent transactions</p>
-        <p className="transactions-empty">No transactions yet.</p>
-      </section>
-
+      <RecentTransactions />
+      
       <nav className="dashboard-nav">
         <Link to="/dashboard" className="nav-item active">🏠 Home</Link>
         <span className="nav-item">💳 Fund</span>

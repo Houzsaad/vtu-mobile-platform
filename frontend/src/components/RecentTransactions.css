@@ -1,0 +1,29 @@
+.recent {
+  margin-top: 24px;
+}
+
+.recent-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.recent-title {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.recent-viewall {
+  background: none;
+  border: none;
+  color: var(--primary);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.recent-empty {
+  text-align: center;
+  color: var(--muted);
+  padding: 16px 0;
+}
