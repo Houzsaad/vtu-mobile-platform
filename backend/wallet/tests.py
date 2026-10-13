@@ -61,9 +61,10 @@ class CreditWalletTests(TestCase):
             with self.assertRaises(ValueError):
                 self.credit(self.w1, amount=bad, ref=f'bad{bad}')
     
-    def debit(self, wallet, amount='200.00', ref='buy1', txn_type=Transaction.Type.AIRTIME):
+    def debit(self, wallet, amount='200.00', ref='buy1', txn_type=Transaction.Type.AIRTIME, recipient='08012345678'):
         return debit_wallet(
-            wallet_id=wallet.id, amount=amount, txn_type=txn_type, provider='vtpass', reference=ref
+            wallet_id=wallet.id, amount=amount, txn_type=txn_type,
+            recipient=recipient, provider='vtpass', reference=ref,
         )
 
     def test_debit_reduces_balance_and_writes_ledger_row(self):
@@ -101,6 +102,17 @@ class CreditWalletTests(TestCase):
         self.credit(self.w1)
         with self.assertRaises(ValueError):
             self.debit(self.w1, txn_type=Transaction.Type.DEPOSIT)
+
+    def test_debit_requires_recipient(self):
+        self.credit(self.w1)
+        with self.assertRaises(ValueError):
+            self.debit(self.w1, recipient=' ')
+    
+    def test_same_purchase_reference_different_recipient_is_blocked(self):
+        self.credit(self.w1)
+        self.debit(self.w1)
+        with self.assertRaises(DuplicateReferenceMismatch):
+           self.debit(self.w1, recipient='09012345678')
 
 class TransactionHistoryTests(CreditWalletTests):
     def test_user_sees_only_own_transactions(self):

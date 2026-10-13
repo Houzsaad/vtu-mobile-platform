@@ -7,9 +7,9 @@ from .models import Transaction, Wallet
 
 class DuplicateReferenceMismatch(Exception):
     """Same provider+reference was already used for a different wallet, amount or type."""
-
-def _existing_or_raise(txn, wallet_id, amount, txn_type):
-    if txn.wallet_id != wallet_id or txn.amount != amount or txn.type != txn_type:
+def _existing_or_raise(txn, wallet_id, amount, txn_type, recipient=''):
+    if (txn.wallet_id != wallet_id or txn.amount != amount
+            or txn.type != txn_type or txn.recipient != recipient):
         raise DuplicateReferenceMismatch(
             f'Reference {txn.provider}/{txn.reference} already used with different details'
         )
@@ -52,10 +52,15 @@ class InsufficientFunds(Exception):
     """Wallet balance is lower than the purchase amount."""
 
 
-def debit_wallet(*, wallet_id, amount, txn_type, provider, reference):
+def debit_wallet(*, wallet_id, amount, txn_type, recipient, provider, reference):
     if txn_type not in (Transaction.Type.AIRTIME, Transaction.Type.DATA):
         raise ValueError('txn_type must be airtime or data')
 
+    recipient = str(recipient).strip()
+    if not recipient:
+        raise ValueError('Recipient phone number is required')
+    
+  
     amount = Decimal(str(amount))
     if amount <= 0 or amount != amount.quantize(Decimal('0.01')):
         raise ValueError('Amount must be positive with at most 2 decimal places')
@@ -66,7 +71,7 @@ def debit_wallet(*, wallet_id, amount, txn_type, provider, reference):
 
             existing = Transaction.objects.filter(provider=provider, reference=reference).first()
             if existing:
-                return _existing_or_raise(existing, wallet_id, amount, txn_type)
+                return _existing_or_raise(existing, wallet_id, amount, txn_type, recipient)
 
             if wallet.balance < amount:
                 raise InsufficientFunds('Insufficient wallet balance')
@@ -81,10 +86,11 @@ def debit_wallet(*, wallet_id, amount, txn_type, provider, reference):
                 balance_after=wallet.balance,
                 provider=provider,
                 reference=reference,
+                recipient=recipient,
             )
             return txn, True
     except IntegrityError:
         existing = Transaction.objects.filter(provider=provider, reference=reference).first()
         if existing is None:
             raise
-        return _existing_or_raise(existing, wallet_id, amount, txn_type)
+        return _existing_or_raise(existing, wallet_id, amount, txn_type, recipient)
