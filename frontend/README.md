@@ -94,8 +94,6 @@ frontend/
     <img src="trxn-history.png" width="390"/>
 </p>
 
-![alt text](<Screenshot 2026-10-13 172709.png>)
-
 ## Local Setup
 
 ```bash
