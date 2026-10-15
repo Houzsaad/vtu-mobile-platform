@@ -44,13 +44,13 @@ frontend/
 - [x] **Change Password** — enforces the password rules and rejects reusing the old password.
 - [x] **Change Transaction PIN** — 4-digit numeric PIN, rejects reusing the old PIN.
 - [x] **Light/dark mode** — sun/moon toggle, remembered between visits.
+- [x] **Transaction history** — Transaction history, it display the service type, recipient, amount, amd wallet balance after. Also diplay 3 recent transactions in the dashboard and view all option.
 
 ### 🚧 Planned
 - [ ] Forgot Password (needs a verified domain for OTP emails)
 - [ ] Fund wallet (virtual account details)
 - [ ] Buy Airtime
 - [ ] Buy Data
-- [ ] Transaction history
 - [ ] PWA setup (manifest, service worker, installable)
 
 ## Screenshots
@@ -88,6 +88,13 @@ frontend/
     <img src="change-password.png" width="390"/>
 </p>
 
+### Transaction History
+
+<p align="center">
+    <img src="trxn-history.png" width="390"/>
+</p>
+
+![alt text](<Screenshot 2026-10-13 172709.png>)
 
 ## Local Setup
 
