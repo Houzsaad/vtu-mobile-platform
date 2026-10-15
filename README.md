@@ -66,10 +66,10 @@ One feature at a time — no rushing.
 - [x] Accounts: Logout
 - [x] Accounts: Change Password
 - [x] Accounts: Profile
+- [x] Transactions
 - [ ] Accounts: Forgot Password
 - [ ] Wallet
 - [ ] Wallet funding
-- [ ] Transactions
 - [ ] Buy Airtime
 - [ ] Buy Data
 - [ ] PWA setup
