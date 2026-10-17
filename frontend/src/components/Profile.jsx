@@ -59,9 +59,7 @@ export default function Profile() {
         onClick={toggleBalance}
         aria-label={showBalance ? 'Hide balance' : 'Show balance'}
       >
-        <ThemeToggle />
-
-        {showBalance ? '👁️' : '🙈'}
+      {showBalance ? '👁️' : '🙈'}
       </button>
       </div>
       </div>
@@ -81,7 +79,12 @@ export default function Profile() {
         >
           💬 Customer care
         </a>
+
+      <div className="menu-item theme-row">
+        <span>🎨 Appearance</span>
+        <ThemeToggle />
       </div>
+    </div>
 
       <button className="profile-logout-btn" onClick={handleLogout}>
         Logout
@@ -90,7 +93,7 @@ export default function Profile() {
       <nav className="dashboard-nav">
         <Link to="/dashboard" className="nav-item">🏠 Home</Link>
         <span className="nav-item">💳 Fund</span>
-        <span className="nav-item">📜 History</span>
+        <Link to="/history" className="nav-item">📜 History</Link>
         <Link to="/profile" className="nav-item active">👤 Profile</Link>
       </nav>
     </div>
