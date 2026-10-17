@@ -68,7 +68,7 @@ export default function Dashboard() {
       <section className="services-section">
         <p className="section-title">Services</p>
         <div className="services-grid">
-          <div className="service-item">📱 Airtime</div>
+          <div className="service-item">📞 Airtime</div>
           <div className="service-item">🌐 Data</div>
         </div>
       </section>
