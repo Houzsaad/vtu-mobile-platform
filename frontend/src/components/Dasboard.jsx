@@ -76,11 +76,12 @@ export default function Dashboard() {
       <RecentTransactions />
       
       <nav className="dashboard-nav">
-        <Link to="/dashboard" className="nav-item active">🏠 Home</Link>
+        <Link to="/dashboard" className="nav-item">🏠 Home</Link>
         <span className="nav-item">💳 Fund</span>
-        <Link to="/history" className="nav-item">📜 History</Link>
+        <Link to="/history" className="nav-item active">📜 History</Link>
         <Link to="/profile" className="nav-item">👤 Profile</Link>
       </nav>
+
     </div>
   );
 }
