@@ -102,16 +102,18 @@
   padding: 20px 0;
 }
 
-.dashboard-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: var(--surface-2);
-  border-top: 1px solid var(--border);
+.bottom-nav a {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
   padding: 10px 0;
+  font-size: 13px;
+  flex: 1;
+}
+
+.bottom-nav a .icon {
+  font-size: 22px;
 }
 
 .nav-item {
@@ -163,18 +165,4 @@
 .dashboard-header .welcome-text {
   min-width: 0;
   flex: 1;
-}
-
-.bottom-nav a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  padding: 10px 0;
-  font-size: 13px;
-  flex: 1;
-}
-
-.bottom-nav a .icon {
-  font-size: 22px;
 }
