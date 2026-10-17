@@ -4,6 +4,13 @@ A data/airtime VTU (Virtual Top-Up) platform — Django REST API backend, React 
 
 > 🚧 **Status: Early development.** Registration is the first complete feature (API + UI + styling, tested end to end). Everything else is in progress or planned.
 
+## 🔗 Live Demo
+
+| Part | Link |
+|------|------|
+| Frontend | https://vtu-mobile-platform.vercel.app |
+| Backend API | https://vtu-mobile-platform.onrender.com/api |
+
 ## Structure
 
 ```
