@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { apiGet } from '../api';
 import './Profile.css';
+import ThemeToggle from './ThemeToggle';
+<ThemeToggle />
+
 
 export default function Profile() {
   const [profile, setProfile] = useState(null);
