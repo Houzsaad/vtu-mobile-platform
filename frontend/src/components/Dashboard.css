@@ -165,12 +165,6 @@
   flex: 1;
 }
 
-.theme-toggle {
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-}
-
 .bottom-nav a {
   display: flex;
   flex-direction: column;
