@@ -9,7 +9,7 @@ A data/airtime VTU (Virtual Top-Up) platform — Django REST API backend, React 
 | Part | Link |
 |------|------|
 | Frontend | https://vtu-mobile-platform.vercel.app |
-| Backend API | https://vtu-mobile-platform.onrender.com/api |
+| Backend API | https://vtu-mobile-platform.onrender.com/api/accounts/register |
 
 > **Note:** The backend is hosted on Render's free tier, so the first request after a period of inactivity may take up to a minute to respond.
 
