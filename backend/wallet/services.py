@@ -4,6 +4,15 @@ from django.db import IntegrityError, transaction as db_transaction
 
 from .models import Transaction, Wallet, WalletEntry
 
+import uuid
+from zoneinfo import ZoneInfo
+
+from django.utils import timezone
+
+def generate_reference():
+    # VTPass wants request_id to start with YYYYMMDDHHmm in Lagos time
+    now = timezone.now().astimezone(ZoneInfo("Africa/Lagos"))
+    return now.strftime("%Y%m%d%H%M") + uuid.uuid4().hex[:12]
 
 class DuplicateReferenceMismatch(Exception):
     """Same provider+reference was already used for a different wallet, amount or type."""
@@ -115,3 +124,4 @@ def debit_wallet(*, wallet_id, amount, txn_type, recipient, provider, reference,
         if existing is None:
             raise
         return _existing_or_raise(existing, wallet_id, amount, txn_type, recipient)
+
