@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from django.db import IntegrityError, transaction as db_transaction
 
-from .models import Transaction, Wallet
+from .models import Transaction, Wallet, WalletEntry
 
 
 class DuplicateReferenceMismatch(Exception):
@@ -28,8 +28,9 @@ def credit_wallet(*, wallet_id, amount, provider, reference):
             if existing:
                 return _existing_or_raise(existing, wallet_id, amount, Transaction.Type.DEPOSIT)
 
+            balance_before = wallet.balance
             wallet.balance += amount
-            wallet.save(update_fields=['balance'])
+            wallet.save(update_fields=['balance', 'updated_at'])
 
             txn = Transaction.objects.create(
                 wallet=wallet,
@@ -38,6 +39,15 @@ def credit_wallet(*, wallet_id, amount, provider, reference):
                 balance_after=wallet.balance,
                 provider=provider,
                 reference=reference,
+                status=Transaction.Status.SUCCESS,
+            )
+            WalletEntry.objects.create(
+                wallet=wallet,
+                transaction=txn,
+                kind=WalletEntry.Kind.CREDIT,
+                amount=amount,
+                balance_before=balance_before,
+                balance_after=wallet.balance,
             )
             return txn, True
     except IntegrityError:
@@ -46,13 +56,13 @@ def credit_wallet(*, wallet_id, amount, provider, reference):
         existing = Transaction.objects.filter(provider=provider, reference=reference).first()
         if existing is None:
             raise
-        return _existing_or_raise(existing, wallet_id, amount)
+        return _existing_or_raise(existing, wallet_id, amount, Transaction.Type.DEPOSIT)
 
 class InsufficientFunds(Exception):
     """Wallet balance is lower than the purchase amount."""
 
 
-def debit_wallet(*, wallet_id, amount, txn_type, recipient, provider, reference):
+def debit_wallet(*, wallet_id, amount, txn_type, recipient, provider, reference, network=''):
     if txn_type not in (Transaction.Type.AIRTIME, Transaction.Type.DATA):
         raise ValueError('txn_type must be airtime or data')
 
@@ -76,8 +86,9 @@ def debit_wallet(*, wallet_id, amount, txn_type, recipient, provider, reference)
             if wallet.balance < amount:
                 raise InsufficientFunds('Insufficient wallet balance')
 
+            balance_before = wallet.balance
             wallet.balance -= amount
-            wallet.save(update_fields=['balance'])
+            wallet.save(update_fields=['balance', 'updated_at'])
 
             txn = Transaction.objects.create(
                 wallet=wallet,
@@ -87,6 +98,16 @@ def debit_wallet(*, wallet_id, amount, txn_type, recipient, provider, reference)
                 provider=provider,
                 reference=reference,
                 recipient=recipient,
+                network=network,
+                status=Transaction.Status.PENDING,
+            )
+            WalletEntry.objects.create(
+                wallet=wallet,
+                transaction=txn,
+                kind=WalletEntry.Kind.DEBIT,
+                amount=amount,
+                balance_before=balance_before,
+                balance_after=wallet.balance,
             )
             return txn, True
     except IntegrityError:
