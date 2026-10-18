@@ -19,6 +19,26 @@ class Transaction(models.Model):
         DEPOSIT = 'deposit', 'Deposit'
         AIRTIME = 'airtime', 'Airtime'
         DATA = 'data', 'Data'
+
+    class Status(models.TextChoices):
+        PENDING = 'pending', 'Pending'
+        SUCCESS = 'success', 'Success'
+        FAILED = 'failed', 'Failed'
+
+    class Network(models.TextChoices):
+        MTN = 'mtn', 'MTN'
+        GLO = 'glo', 'Glo'
+        AIRTEL = 'airtel', 'Airtel'
+        NINE_MOBILE = '9mobile', '9mobile'
+
+    status = models.CharField(
+        max_length=10, choices=Status.choices, default=Status.PENDING, db_index=True
+    )
+    network = models.CharField(max_length=10, choices=Network.choices, blank=True)
+    provider_reference = models.CharField(max_length=100, blank=True)
+    provider_response = models.JSONField(null=True, blank=True)
+    refunded = models.BooleanField(default=False)
+    updated_at = models.DateTimeField(auto_now=True)
         
     wallet = models.ForeignKey(Wallet, on_delete=models.PROTECT, related_name='transactions')
     type = models.CharField(max_length=20, choices=Type.choices)

@@ -118,3 +118,9 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
+
+VTU_PROVIDER = os.getenv("VTU_PROVIDER", "vtpass")
+VTPASS_BASE_URL = os.getenv("VTPASS_BASE_URL", "https://sandbox.vtpass.com/api")
+VTPASS_API_KEY = os.getenv("VTPASS_API_KEY")
+VTPASS_PUBLIC_KEY = os.getenv("VTPASS_PUBLIC_KEY")
+VTPASS_SECRET_KEY = os.getenv("VTPASS_SECRET_KEY")
