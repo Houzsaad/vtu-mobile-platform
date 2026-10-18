@@ -11,6 +11,8 @@ from django.utils import timezone
 
 from providers import vtpass
 
+import re
+
 def generate_reference():
     # VTPass wants request_id to start with YYYYMMDDHHmm in Lagos time
     now = timezone.now().astimezone(ZoneInfo("Africa/Lagos"))
@@ -199,3 +201,13 @@ def purchase_airtime(*, wallet_id, network, phone, amount, reference=None):
         provider_reference=result['provider_reference'],
         raw=result['raw'],
     )
+
+class InvalidPin(Exception):
+    pass
+
+def verify_transaction_pin(user, pin):
+    pin = str(pin)
+    if not re.fullmatch(r"\d{4}", pin):
+        raise InvalidPin()
+    if not user.check_pin(pin):
+        raise InvalidPin()
