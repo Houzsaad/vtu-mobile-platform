@@ -124,4 +124,40 @@ def debit_wallet(*, wallet_id, amount, txn_type, recipient, provider, reference,
         if existing is None:
             raise
         return _existing_or_raise(existing, wallet_id, amount, txn_type, recipient)
+    
 
+def settle_transaction(*, transaction_id, outcome, provider_reference='', raw=None):
+    with db_transaction.atomic():
+        txn = Transaction.objects.select_for_update().get(pk=transaction_id)
+
+        # Already final: never change a settled transaction
+        if txn.status != Transaction.Status.PENDING:
+            return txn
+
+        if provider_reference:
+            txn.provider_reference = provider_reference
+        if raw is not None:
+            txn.provider_response = raw
+
+        if outcome == 'success':
+            txn.status = Transaction.Status.SUCCESS
+
+        elif outcome == 'failed':
+            txn.status = Transaction.Status.FAILED
+            if not txn.refunded:
+                wallet = Wallet.objects.select_for_update().get(pk=txn.wallet_id)
+                balance_before = wallet.balance
+                wallet.balance += txn.amount
+                wallet.save(update_fields=['balance', 'updated_at'])
+                WalletEntry.objects.create(
+                    wallet=wallet,
+                    transaction=txn,
+                    kind=WalletEntry.Kind.REFUND,
+                    amount=txn.amount,
+                    balance_before=balance_before,
+                    balance_after=wallet.balance,
+                )
+                txn.refunded = True
+        # outcome == 'pending': stay PENDING, just keep the saved response
+        txn.save()
+        return txn
