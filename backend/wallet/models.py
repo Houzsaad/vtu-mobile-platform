@@ -58,3 +58,31 @@ class Transaction(models.Model):
 
     def __str__(self):
         return f'{self.type} {self.amount} ({self.reference})'
+
+class WalletEntry(models.Model):
+    class Kind(models.TextChoices):
+        DEBIT = 'debit', 'Debit'
+        REFUND = 'refund', 'Refund'
+        CREDIT = 'credit', 'Credit'
+
+    wallet = models.ForeignKey(Wallet, on_delete=models.PROTECT, related_name='entries')
+    transaction = models.ForeignKey(
+        Transaction, on_delete=models.PROTECT, related_name='entries'
+    )
+    kind = models.CharField(max_length=10, choices=Kind.choices)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    balance_before = models.DecimalField(max_digits=12, decimal_places=2)
+    balance_after = models.DecimalField(max_digits=12, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['transaction', 'kind'], name='one_entry_per_kind_per_transaction'
+            ),
+            models.CheckConstraint(condition=models.Q(amount__gt=0), name='entry_amount_positive'),
+        ]
+
+    def __str__(self):
+        return f'{self.kind} {self.amount} for {self.transaction.reference}'
