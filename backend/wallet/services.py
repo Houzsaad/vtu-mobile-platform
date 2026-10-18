@@ -9,6 +9,8 @@ from zoneinfo import ZoneInfo
 
 from django.utils import timezone
 
+from providers import vtpass
+
 def generate_reference():
     # VTPass wants request_id to start with YYYYMMDDHHmm in Lagos time
     now = timezone.now().astimezone(ZoneInfo("Africa/Lagos"))
@@ -161,3 +163,39 @@ def settle_transaction(*, transaction_id, outcome, provider_reference='', raw=No
         # outcome == 'pending': stay PENDING, just keep the saved response
         txn.save()
         return txn
+
+
+def purchase_airtime(*, wallet_id, network, phone, amount, reference=None):
+    reference = reference or generate_reference()
+
+    # 1. Debit + PENDING transaction, committed before any provider calling external provider
+    txn, created = debit_wallet(
+        wallet_id=wallet_id,
+        amount=amount,
+        txn_type=Transaction.Type.AIRTIME,
+        recipient=phone,
+        provider='vtpass',
+        reference=reference,
+        network=network,
+    )
+
+    # A repeated reference returns the existing transaction. Never call VTPassor any provider again.
+    if not created:
+        return txn
+
+    # 2. Call the provider with no database lock held
+    try:
+        result = vtpass.buy_airtime(
+            network=network, phone=phone, amount=amount, reference=reference
+        )
+    except Exception:
+        # Unknown state is not a failure (golden rule)
+        result = {'outcome': 'pending', 'provider_reference': '', 'raw': None}
+
+    # 3. Settle based on what VTPass or any provider said
+    return settle_transaction(
+        transaction_id=txn.id,
+        outcome=result['outcome'],
+        provider_reference=result['provider_reference'],
+        raw=result['raw'],
+    )
