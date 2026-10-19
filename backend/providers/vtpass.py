@@ -90,3 +90,28 @@ def requery(reference):
 
     # No transaction in the reply: we don't yet know what this means
     return _result("pending", "", data)
+
+DATA_SERVICE_IDS = {
+    "mtn": "mtn-data",
+    "glo": "glo-data",
+    "airtel": "airtel-data",
+    "9mobile": "etisalat-data",
+}
+
+def buy_data(*, network, phone, variation_code, reference):
+    payload = {
+        "request_id": reference,
+        "serviceID": DATA_SERVICE_IDS[network],
+        "billersCode": phone,
+        "variation_code": variation_code,
+        "phone": phone,
+    }
+    try:
+        resp = requests.post(
+            f"{settings.VTPASS_BASE_URL}/pay",
+            json=payload, headers=_headers(), timeout=TIMEOUT,
+        )
+        data = resp.json()
+    except (requests.RequestException, ValueError):
+        return _result("pending", "", None)
+    return _interpret(data)

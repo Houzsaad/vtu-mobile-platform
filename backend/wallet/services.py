@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from django.db import IntegrityError, transaction as db_transaction
 
-from .models import Transaction, Wallet, WalletEntry
+from .models import Transaction, Wallet, WalletEntry, DataPlan
 
 import uuid
 from zoneinfo import ZoneInfo
@@ -75,7 +75,7 @@ class InsufficientFunds(Exception):
     """Wallet balance is lower than the purchase amount."""
 
 
-def debit_wallet(*, wallet_id, amount, txn_type, recipient, provider, reference, network=''):
+def debit_wallet(*, wallet_id, amount, txn_type, recipient, provider, reference, network='', description=''):
     if txn_type not in (Transaction.Type.AIRTIME, Transaction.Type.DATA):
         raise ValueError('txn_type must be airtime or data')
 
@@ -107,6 +107,7 @@ def debit_wallet(*, wallet_id, amount, txn_type, recipient, provider, reference,
                 wallet=wallet,
                 type=txn_type,
                 amount=amount,
+                description=description,
                 balance_after=wallet.balance,
                 provider=provider,
                 reference=reference,
@@ -211,3 +212,49 @@ def verify_transaction_pin(user, pin):
         raise InvalidPin()
     if not user.check_pin(pin):
         raise InvalidPin()
+
+
+
+class PlanUnavailable(Exception):
+    pass
+
+
+def purchase_data(*, wallet_id, plan_id, phone, reference=None):
+    # Law 3 and 15: the price and availability come from the database
+    try:
+        plan = DataPlan.objects.get(pk=plan_id, is_active=True)
+    except DataPlan.DoesNotExist:
+        raise PlanUnavailable()
+
+    reference = reference or generate_reference()
+
+    txn, created = debit_wallet(
+        wallet_id=wallet_id,
+        amount=plan.price,
+        txn_type=Transaction.Type.DATA,
+        recipient=phone,
+        provider='vtpass',
+        reference=reference,
+        network=plan.network,
+        description=plan.name,
+    )
+
+    if not created:
+        return txn
+
+    try:
+        result = vtpass.buy_data(
+            network=plan.network,
+            phone=phone,
+            variation_code=plan.variation_code,
+            reference=reference,
+        )
+    except Exception:
+        result = {'outcome': 'pending', 'provider_reference': '', 'raw': None}
+
+    return settle_transaction(
+        transaction_id=txn.id,
+        outcome=result['outcome'],
+        provider_reference=result['provider_reference'],
+        raw=result['raw'],
+    )

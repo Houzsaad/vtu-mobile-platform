@@ -39,7 +39,8 @@ class Transaction(models.Model):
     provider_response = models.JSONField(null=True, blank=True)
     refunded = models.BooleanField(default=False)
     updated_at = models.DateTimeField(auto_now=True)
-        
+
+    description = models.CharField(max_length=150, blank=True)    
     wallet = models.ForeignKey(Wallet, on_delete=models.PROTECT, related_name='transactions')
     type = models.CharField(max_length=20, choices=Type.choices)
     amount = models.DecimalField(max_digits=12, decimal_places=2)
