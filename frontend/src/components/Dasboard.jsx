@@ -69,7 +69,7 @@ export default function Dashboard() {
         <p className="section-title">Services</p>
         <div className="services-grid">
           <Link to="/airtime" className="service-item">📞 Airtime</Link>
-          <div className="service-item">🌐 Data</div>
+          <Link to="/data" className="service-item">🌐 Data</Link>
         </div>
       </section>
 
