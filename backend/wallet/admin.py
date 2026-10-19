@@ -30,7 +30,7 @@ class TransactionAdmin(admin.ModelAdmin):
     )
     list_filter = ("type", "provider")
     readonly_fields = (
-        "wallet",
+        # "wallet",
         "type",
         "amount",
         "balance_after",
