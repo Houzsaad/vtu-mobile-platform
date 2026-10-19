@@ -2,7 +2,7 @@
 
 React frontend for the VTU app, built with Vite. Talks to the Django REST API in `../backend`.
 
-> 🚧 **Status: Early development.** Account screens (register, login, dashboard, profile, password and PIN management) are complete. Wallet funding and VTU services are planned.
+> 🚧 **Status: Early development.** Account screens (register, login, dashboard, profile, password, PIN management, buy data and buy airtime) are completed. Wallet funding, forgot password and PWA are planned.
 
 ## Tech Stack
 
@@ -45,12 +45,12 @@ frontend/
 - [x] **Change Transaction PIN** — 4-digit numeric PIN, rejects reusing the old PIN.
 - [x] **Light/dark mode** — sun/moon toggle, remembered between visits.
 - [x] **Transaction history** — Transaction history, it display the service type, recipient, amount, amd wallet balance after. Also diplay 3 recent transactions in the dashboard and view all option.
+- [x] **Buy Airtime** — Buy airtime, has one flow user will select network, enter amount and transaction PIN, the backend will validate request and create transaction, deduct fund and lock raw before calling external proviser, if transaction fail the backend will release fund and update transaction.
+- [x] **Buy Data** — Buy data, the laws are almost all the same with purchase airtime only flow is vary, where user will select plan apart from network.
 
 ### 🚧 Planned
 - [ ] Forgot Password (needs a verified domain for OTP emails)
 - [ ] Fund wallet (virtual account details)
-- [ ] Buy Airtime
-- [ ] Buy Data
 - [ ] PWA setup (manifest, service worker, installable)
 
 ## Screenshots
