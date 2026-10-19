@@ -76,11 +76,11 @@ One feature at a time — no rushing.
 - [x] Accounts: Change Password
 - [x] Accounts: Profile
 - [x] Transactions
-- [ ] Accounts: Forgot Password
-- [ ] Wallet
+- [x] Wallet
+- [x] Buy Airtime
+- [x] Buy Data
 - [ ] Wallet funding
-- [ ] Buy Airtime
-- [ ] Buy Data
+- [ ] Accounts: Forgot Password
 - [ ] PWA setup
 
 ## Author
