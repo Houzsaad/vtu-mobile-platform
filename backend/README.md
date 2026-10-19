@@ -62,13 +62,13 @@ vtu-app/
  - ✅ Change Password
  - ✅ Forgot PIN
  - ✅ User Profile endpoint
+ - ✅ React frontend (registration, login, dashboard)
+ - ✅ Transaction history
+ - ✅ Airtime purchase
+ - ✅ Data purchase
  - Forgot Password (OTP via Resend, reset flow)
  - Wallet funding (payment provider integration)
- - Transaction history
- - Airtime purchase
- - Data purchase
  - Rate limiting on sensitive endpoints
- - React frontend (registration, login, dashboard)
  - PWA setup (installable, offline caching)
 
 ### Account Rules
@@ -100,6 +100,17 @@ API will be available at ```http://127.0.0.1:8000/```
 ## Registration endpoint
 <p align="center">
     <img src="api-docs.png" width="390"/>
+</p>
+
+## Buy Airtime Postman Respond
+<p align="center">
+    <img src="buy-airtime.png" width="390"/>
+</p>
+
+## Buy Data Postman Respond
+
+<p align="center">
+    <img src="buy-data.png" width="390"/>
 </p>
 
 Once the server is running:
