@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from .models import Wallet, Transaction
+from .models import Wallet, Transaction, DataPlan
 
 
 @admin.register(Wallet)
@@ -38,5 +38,13 @@ class TransactionAdmin(admin.ModelAdmin):
         "reference",
     )
     ordering = ("-id",)
+
+
+
+@admin.register(DataPlan)
+class DataPlanAdmin(admin.ModelAdmin):
+    list_display = ('network', 'name', 'variation_code', 'price', 'is_active')
+    list_editable = ('price', 'is_active')
+    list_filter = ('network', 'is_active')
 
 # Register your models here.

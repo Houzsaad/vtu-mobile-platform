@@ -86,3 +86,23 @@ class WalletEntry(models.Model):
 
     def __str__(self):
         return f'{self.kind} {self.amount} for {self.transaction.reference}'
+
+class DataPlan(models.Model):
+    network = models.CharField(max_length=10, choices=Transaction.Network.choices)
+    name = models.CharField(max_length=100)
+    variation_code = models.CharField(max_length=50)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    is_active = models.BooleanField(default=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['network', 'price']
+        constraints = [
+            models.UniqueConstraint(
+                fields=['network', 'variation_code'], name='unique_plan_per_network'
+            ),
+            models.CheckConstraint(condition=models.Q(price__gt=0), name='plan_price_positive'),
+        ]
+
+    def __str__(self):
+        return f'{self.network} {self.name} (₦{self.price})'
