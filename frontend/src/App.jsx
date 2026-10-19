@@ -7,6 +7,7 @@ import Profile from './components/Profile';
 import ChangePassword from './components/ChangePassword';
 import ChangePin from './components/ChangePIN';
 import History from './components/History';
+import Airtime from './components/Airtime';
 
 function App() {
   useEffect(() => {
@@ -24,6 +25,7 @@ function App() {
       <Route path="/change-password" element={<ChangePassword />} />
       <Route path="/change-pin" element={<ChangePin />} />
       <Route path="/history" element={<History />} />
+      <Route path="/airtime" element={<Airtime />} />
     </Routes>
   );
 }

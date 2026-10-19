@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PasswordInput from './PasswordInput';
 import './ChangePassword.css';
-
-const BASE_URL = 'http://127.0.0.1:8000/api';
+import { apiPost } from '../api';
 
 export default function ChangePin() {
   const [formData, setFormData] = useState({

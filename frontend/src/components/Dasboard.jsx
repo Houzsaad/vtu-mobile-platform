@@ -68,7 +68,7 @@ export default function Dashboard() {
       <section className="services-section">
         <p className="section-title">Services</p>
         <div className="services-grid">
-          <div className="service-item">📞 Airtime</div>
+          <Link to="/airtime" className="service-item">📞 Airtime</Link>
           <div className="service-item">🌐 Data</div>
         </div>
       </section>
@@ -76,7 +76,8 @@ export default function Dashboard() {
       <RecentTransactions />
       
       <nav className="dashboard-nav">
-        <Link to="/dashboard" className="nav-item">🏠 Home</Link>
+        {/* <Link to="/dashboard" className="nav-item">🏠 Home</Link> */}
+        <Link to="/dashboard" className="nav-item active">🏠 Home</Link>
         <span className="nav-item">💳 Fund</span>
         <Link to="/history" className="nav-item active">📜 History</Link>
         <Link to="/profile" className="nav-item">👤 Profile</Link>

@@ -1,16 +1,44 @@
 const BASE_URL = import.meta.env.VITE_API_URL;
 
 
-export async function apiPost(endpoint, data) {
+// export async function apiPost(endpoint, data) {
+//   const response = await fetch(`${BASE_URL}${endpoint}`, {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify(data),
+//   });
+//   const result = await response.json();
+//   if (!response.ok) throw { status: response.status, data: result };
+//   return result;
+// }
+
+// export async function apiGet(endpoint) {
+//   const token = localStorage.getItem('access_token');
+//   const response = await fetch(`${BASE_URL}${endpoint}`, {
+//     headers: { Authorization: `Bearer ${token}` },
+//   });
+//   const result = await response.json();
+//   if (!response.ok) throw { status: response.status, data: result };
+//   return result;
+// }
+
+export async function apiPost(endpoint, data, { auth = false } = {}) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (auth) {
+    const token = localStorage.getItem('access_token');
+    headers.Authorization = `Bearer ${token}`;
+  }
+
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers,
     body: JSON.stringify(data),
   });
   const result = await response.json();
   if (!response.ok) throw { status: response.status, data: result };
   return result;
 }
+
 
 export async function apiGet(endpoint) {
   const token = localStorage.getItem('access_token');
