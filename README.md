@@ -79,9 +79,9 @@ One feature at a time — no rushing.
 - [x] Wallet
 - [x] Buy Airtime
 - [x] Buy Data
+- [x] PWA setup
 - [ ] Wallet funding
 - [ ] Accounts: Forgot Password
-- [ ] PWA setup
 
 ## Author
 
