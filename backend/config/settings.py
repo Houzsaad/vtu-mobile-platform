@@ -71,6 +71,7 @@ MIDDLEWARE = [
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'https://vtu-mobile-platform.vercel.app',
+    'http://localhost:4173'
 ]
 
 ROOT_URLCONF = 'config.urls'
