@@ -66,10 +66,10 @@ vtu-app/
  - ✅ Transaction history
  - ✅ Airtime purchase
  - ✅ Data purchase
+ - ✅ PWA setup (installable, offline caching)
  - Forgot Password (OTP via Resend, reset flow)
  - Wallet funding (payment provider integration)
  - Rate limiting on sensitive endpoints
- - PWA setup (installable, offline caching)
 
 ### Account Rules
 
