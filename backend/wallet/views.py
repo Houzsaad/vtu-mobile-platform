@@ -16,6 +16,7 @@ from .services import (
     InvalidPin, InsufficientFunds, DuplicateReferenceMismatch,
 )
 
+from django.conf import settings
 
 
 class TransactionPagination(PageNumberPagination):
@@ -70,7 +71,7 @@ class DataPlanListView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        plans = DataPlan.objects.filter(is_active=True)
+        plans = DataPlan.objects.filter(is_active=True, provider=settings.VTU_PROVIDER)
         network = request.query_params.get('network')
         if network:
             plans = plans.filter(network=network)

@@ -72,3 +72,20 @@ def buy_airtime(*, network, phone, amount, reference):
 def requery(reference):
     # No status endpoint is documented, so this can never confirm anything
     return _result("pending")
+
+def buy_data(*, network, phone, variation_code, reference):
+    # variation_code holds DodoData's numeric plan ID
+    payload = {
+        "network": int(NETWORK_IDS[network]),
+        "mobile_number": phone,
+        "plan": int(variation_code),
+        "Ported_number": False,
+    }
+    try:
+        resp = requests.post(
+            f"{settings.DODODATA_BASE_URL}/api/data",
+            json=payload, headers=_headers(), timeout=TIMEOUT,
+        )
+    except requests.RequestException:
+        return _result("pending")
+    return _interpret(resp)

@@ -131,3 +131,5 @@ ALLOW_TEST_FUNDING = os.getenv("ALLOW_TEST_FUNDING", "False") == "True"
 
 DODODATA_BASE_URL = os.getenv("DODODATA_BASE_URL", "https://api.dododata.online")
 DODODATA_API_KEY = os.getenv("DODODATA_API_KEY")
+
+VTU_PROVIDER = os.getenv("VTU_PROVIDER", "vtpass")

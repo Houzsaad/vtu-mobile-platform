@@ -11,6 +11,9 @@ from django.utils import timezone
 
 from providers import vtpass
 
+from django.conf import settings
+from providers import get_provider
+
 import re
 
 def generate_reference():
@@ -169,6 +172,7 @@ def settle_transaction(*, transaction_id, outcome, provider_reference='', raw=No
 
 
 def purchase_airtime(*, wallet_id, network, phone, amount, reference=None):
+    provider_name = settings.VTU_PROVIDER
     reference = reference or generate_reference()
 
     # 1. Debit + PENDING transaction, committed before any provider calling external provider
@@ -177,7 +181,7 @@ def purchase_airtime(*, wallet_id, network, phone, amount, reference=None):
         amount=amount,
         txn_type=Transaction.Type.AIRTIME,
         recipient=phone,
-        provider='vtpass',
+        provider=provider_name,
         reference=reference,
         network=network,
     )
@@ -188,7 +192,7 @@ def purchase_airtime(*, wallet_id, network, phone, amount, reference=None):
 
     # 2. Call the provider with no database lock held
     try:
-        result = vtpass.buy_airtime(
+        result = get_provider(provider_name).buy_airtime(
             network=network, phone=phone, amount=amount, reference=reference
         )
     except Exception:
@@ -220,9 +224,10 @@ class PlanUnavailable(Exception):
 
 
 def purchase_data(*, wallet_id, plan_id, phone, reference=None):
+    provider_name = settings.VTU_PROVIDER
     # Law 3 and 15: the price and availability come from the database
     try:
-        plan = DataPlan.objects.get(pk=plan_id, is_active=True)
+        plan = DataPlan.objects.get(pk=plan_id, is_active=True, provider=provider_name)
     except DataPlan.DoesNotExist:
         raise PlanUnavailable()
 
@@ -233,7 +238,7 @@ def purchase_data(*, wallet_id, plan_id, phone, reference=None):
         amount=plan.price,
         txn_type=Transaction.Type.DATA,
         recipient=phone,
-        provider='vtpass',
+        provider=provider_name,
         reference=reference,
         network=plan.network,
         description=plan.name,
@@ -243,7 +248,7 @@ def purchase_data(*, wallet_id, plan_id, phone, reference=None):
         return txn
 
     try:
-        result = vtpass.buy_data(
+        result = get_provider(provider_name).buy_data(
             network=plan.network,
             phone=phone,
             variation_code=plan.variation_code,

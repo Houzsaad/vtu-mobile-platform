@@ -30,6 +30,9 @@ class Command(BaseCommand):
                     timeout=30,
                 )
                 content = r.json().get("content") or {}
+            except requests.HTTPError as e:
+                self.stdout.write(f"VtPass returned HTTP {e.response.status_code}")
+                return
             except (requests.RequestException, ValueError):
                 self.stdout.write(f"{network}: request failed, skipped")
                 continue
