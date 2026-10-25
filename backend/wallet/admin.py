@@ -71,14 +71,15 @@ class TransactionAdmin(admin.ModelAdmin):
         "balance_after",
         "provider",
         "reference",
+        "created_at",
     )
     search_fields = (
         "wallet__user__username",
         "wallet__user__email",
         "reference",
-        "provider",
+        "provider_reference"
     )
-    list_filter = ("type", "provider")
+    list_filter = ("status", "refunded", "type", "provider")
     readonly_fields = (
         # "wallet",
         "type",
