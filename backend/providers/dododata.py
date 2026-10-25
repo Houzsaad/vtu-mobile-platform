@@ -24,7 +24,6 @@ def _headers():
         "Content-Type": "application/json",
     }
 
-
 def _interpret(resp):
     try:
         data = resp.json()
@@ -39,26 +38,30 @@ def _interpret(resp):
     else:
         raw = {"_http_status": resp.status_code, "text": resp.text[:500]}
 
-    if (resp.status_code == 200 and isinstance(data, dict)
-            and str(data.get("status", "")).lower() == "success"):
+    status = str(data.get("status", "")).lower() if isinstance(data, dict) else ""
+
+    if resp.status_code == 200 and status == "success":
         return _result("success", ref, raw)
+
     if resp.status_code in (400, 401, 403):
         # Request refused before processing, so nothing was bought
         return _result("failed", "", raw)
 
-    if (resp.status_code == 200 and isinstance(data, dict)
-            and str(data.get("status", "")).lower() in ("fail", "failed")
-            and _balance_unchanged(data)):
+    if 200 <= resp.status_code < 300 and status in ("fail", "failed") and _balance_unchanged(data):
         # DodoData says fail and took no money, so the user can be refunded
         return _result("failed", "", raw)
-    
+
     # Everything else (timeouts, 409, 429, 5xx, unknown replies) is NOT a confirmed failure
     return _result("pending", ref, raw)
 
-
 def buy_airtime(*, network, phone, amount, reference):
     # DodoData's docs show no field for our own reference
-    payload = {"network": NETWORK_IDS[network], "phone": phone, "amount": int(amount)}
+    payload = {
+    "network": NETWORK_IDS[network],
+    "phone": phone,
+    "mobile_number": phone,
+    "amount": int(amount),
+}
     try:
         resp = requests.post(
             f"{settings.DODODATA_BASE_URL}/api/topup",
