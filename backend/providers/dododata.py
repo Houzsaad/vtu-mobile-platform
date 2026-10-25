@@ -47,9 +47,11 @@ def _interpret(resp):
         # Request refused before processing, so nothing was bought
         return _result("failed", "", raw)
 
-    if 200 <= resp.status_code < 300 and status in ("fail", "failed") and _balance_unchanged(data):
-        # DodoData says fail and took no money, so the user can be refunded
-        return _result("failed", "", raw)
+    if 200 <= resp.status_code < 300 and status == "success":
+        return _result("success", ref, raw)
+    # if 200 <= resp.status_code < 300 and status in ("fail", "failed") and _balance_unchanged(data):
+    #     # DodoData says fail and took no money, so the user can be refunded
+    #     return _result("failed", "", raw)
 
     # Everything else (timeouts, 409, 429, 5xx, unknown replies) is NOT a confirmed failure
     return _result("pending", ref, raw)
