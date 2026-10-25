@@ -94,3 +94,19 @@
   color: var(--text);
   cursor: pointer;
 }
+
+.history-amount.muted { color: var(--muted, #8b8f98); text-decoration: line-through; }
+.history-amount.hold { color: #d99a00; }
+
+.history-badge {
+  display: inline-block;
+  margin: 2px 0;
+  padding: 1px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+.history-badge.success  { background: rgba(34, 160, 90, 0.15);  color: #22a05a; }
+.history-badge.pending  { background: rgba(217, 154, 0, 0.15);  color: #d99a00; }
+.history-badge.failed   { background: rgba(214, 69, 69, 0.15);  color: #d64545; }
+.history-badge.refunded { background: rgba(139, 143, 152, 0.18); color: #8b8f98; }
