@@ -11,6 +11,17 @@ from .models import FundingRequest
 from .paystack import clamp_expiry, create_transfer_charge
 from .serializers import FundingRequestSerializer, InitiateFundingSerializer
 
+import hashlib
+import hmac
+import json
+from decimal import Decimal
+
+from django.conf import settings
+from django.db import transaction as db_transaction
+from rest_framework.permissions import AllowAny
+
+from wallet.services import credit_wallet
+
 
 class InitiateFundingView(APIView):
     permission_classes = [IsAuthenticated]
@@ -56,4 +67,57 @@ class InitiateFundingView(APIView):
 
         return Response(FundingRequestSerializer(funding).data, status=status.HTTP_201_CREATED)
 
+### WEEBHOOK ARENA ###
+
+def _valid_signature(raw_body, signature):
+    expected = hmac.new(settings.PAYSTACK_SECRET_KEY.encode(),
+                        raw_body, hashlib.sha512).hexdigest()
+    return hmac.compare_digest(expected, signature or "")
+
+
+class PaystackWebhookView(APIView):
+    authentication_classes = []
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        raw = request.body  # read before touching request.data
+        if not _valid_signature(raw, request.headers.get("x-paystack-signature")):
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            event = json.loads(raw)
+        except ValueError:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
+        data = event.get("data") or {}
+        if event.get("event") != "charge.success" or data.get("channel") != "bank_transfer":
+            return Response(status=status.HTTP_200_OK)  # not ours, ignore
+
+        with db_transaction.atomic():
+            funding = (FundingRequest.objects.select_for_update()
+                       .filter(reference=data.get("reference")).first())
+            if funding is None or funding.status == FundingRequest.Status.SUCCESS:
+                return Response(status=status.HTTP_200_OK)
+
+            received = Decimal(str(data.get("amount", 0))) / 100
+            funding.raw = event
+            funding.amount_received = received
+
+            exact = (received == funding.amount and data.get("currency", "NGN") == "NGN")
+            on_time = funding.status == FundingRequest.Status.PENDING
+
+            if exact and on_time:
+                credit_wallet(
+                    wallet_id=funding.user.wallet.id,
+                    amount=funding.amount,
+                    provider="paystack",
+                    reference=funding.reference,
+                )
+                funding.status = FundingRequest.Status.SUCCESS
+            else:
+                funding.status = FundingRequest.Status.REVIEW  # money arrived, a human decides
+
+            funding.save()
+
+        return Response(status=status.HTTP_200_OK)
 # Create your views here.
