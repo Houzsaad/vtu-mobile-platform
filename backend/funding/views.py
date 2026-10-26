@@ -22,6 +22,8 @@ from rest_framework.permissions import AllowAny
 
 from wallet.services import credit_wallet
 
+from rest_framework.generics import get_object_or_404
+
 
 class InitiateFundingView(APIView):
     permission_classes = [IsAuthenticated]
@@ -120,4 +122,20 @@ class PaystackWebhookView(APIView):
             funding.save()
 
         return Response(status=status.HTTP_200_OK)
+
+
+class FundingStatusView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, reference):
+        funding = get_object_or_404(
+            FundingRequest, reference=reference, user=request.user)
+
+        # Mark overdue pending requests as expired so the page can stop waiting
+        if (funding.status == FundingRequest.Status.PENDING
+                and funding.expires_at and funding.expires_at < timezone.now()):
+            funding.status = FundingRequest.Status.EXPIRED
+            funding.save(update_fields=["status", "updated_at"])
+
+        return Response(FundingRequestSerializer(funding).data)
 # Create your views here.
