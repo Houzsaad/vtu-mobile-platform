@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'accounts',
     'wallet',
+    'funding'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
