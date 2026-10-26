@@ -1,0 +1,83 @@
+.fund-page {
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 16px 16px 100px;
+}
+
+.fund-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.fund-back { background: none; border: 0; font-size: 22px; color: inherit; cursor: pointer; }
+.fund-title { margin: 0; font-size: 20px; }
+
+.fund-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid rgba(128, 128, 128, 0.25);
+  border-radius: 16px;
+}
+.fund-center { align-items: center; text-align: center; }
+
+.fund-label { font-size: 14px; opacity: 0.7; }
+.fund-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px;
+  font-size: 18px;
+  color: inherit;
+  background: transparent;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 12px;
+}
+.fund-input:focus { outline: 2px solid #4a6fa5; outline-offset: 1px; }
+
+.fund-quick { display: flex; flex-wrap: wrap; gap: 8px; }
+.fund-quick button {
+  padding: 8px 14px;
+  font-size: 14px;
+  color: inherit;
+  background: transparent;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.fund-primary {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  background: #141f3d;
+  border: 0;
+  border-radius: 12px;
+  cursor: pointer;
+}
+.fund-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.fund-secondary {
+  padding: 12px;
+  font-size: 15px;
+  color: inherit;
+  background: transparent;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.fund-amount { margin: 0; font-size: 28px; font-weight: 700; }
+.fund-big { margin: 0; font-size: 44px; }
+.fund-note { margin: 0; font-size: 13px; opacity: 0.7; }
+.fund-error { margin: 0; font-size: 14px; color: #d64545; }
+.fund-timer { margin: 0; font-size: 14px; font-weight: 600; color: #d99a00; text-align: center; }
+
+.fund-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.18);
+  font-size: 15px;
+}
+.fund-row span { opacity: 0.7; }
+.fund-acct { font-size: 20px; letter-spacing: 1px; }

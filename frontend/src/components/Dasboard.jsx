@@ -62,8 +62,10 @@ export default function Dashboard() {
             {showBalance ? '👁️' : '🙈'}
           </button>
         </div>
-        <button className="wallet-fund-btn">Fund wallet</button>
-      </div>
+          <button className="wallet-fund-btn" onClick={() => navigate('/fund')}>
+          Fund wallet
+       </button> 
+        </div>
 
       <section className="services-section">
         <p className="section-title">Services</p>
@@ -78,7 +80,7 @@ export default function Dashboard() {
       <nav className="dashboard-nav">
         {/* <Link to="/dashboard" className="nav-item">🏠 Home</Link> */}
         <Link to="/dashboard" className="nav-item active">🏠 Home</Link>
-        <span className="nav-item">💳 Fund</span>
+        <Link to="/fund" className="nav-item active">💳 Fund</Link>
         <Link to="/history" className="nav-item active">📜 History</Link>
         <Link to="/profile" className="nav-item">👤 Profile</Link>
       </nav>

@@ -9,6 +9,7 @@ import ChangePin from './components/ChangePIN';
 import History from './components/History';
 import Airtime from './components/Airtime';
 import Data from './components/Data';
+import Fund from './components/Fund';
 
 function App() {
   useEffect(() => {
@@ -28,6 +29,7 @@ function App() {
       <Route path="/history" element={<History />} />
       <Route path="/airtime" element={<Airtime />} />
       <Route path="/data" element={<Data />} />
+      <Route path="/fund" element={<Fund />} />
     </Routes>
   );
 }
