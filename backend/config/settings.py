@@ -134,3 +134,12 @@ DODODATA_BASE_URL = os.getenv("DODODATA_BASE_URL", "https://api.dododata.online"
 DODODATA_API_KEY = os.getenv("DODODATA_API_KEY")
 
 VTU_PROVIDER = os.getenv("VTU_PROVIDER", "vtpass")
+
+PAYSTACK_SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY")
+PAYSTACK_PUBLICK_KEY = os.getenv("PAYSTACK_PUBLICK_KEY")
+PAYSTACK_BASE_URL = "https://api.paystack.co"
+
+FUNDING_MIN_AMOUNT = 100
+FUNDING_MAX_AMOUNT = 100000
+FUNDING_EXPIRY_MINUTES = 30      # default; clamped to 15 min – 8 hours
+USE_TZ = True
