@@ -51,7 +51,7 @@ export default function Profile() {
         <p className="profile-balance-label">Wallet balance</p>
       <div className="profile-balance-row">
       <p className="profile-balance-amount">
-        {showBalance ? `₦${profile.wallet_balance}` : '₦ • • • • • •'}
+        {showBalance ? `₦${profile.wallet_balance}` : '₦ xxx'}
       </p>
       <button
         type="button"

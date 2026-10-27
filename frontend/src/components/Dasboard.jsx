@@ -51,7 +51,7 @@ export default function Dashboard() {
         <p className="wallet-label">💰 Wallet balance</p>
         <div className="wallet-amount-row">
           <p className="wallet-amount">
-            {showBalance ? `₦${profile.wallet_balance}` : '₦ • • • • •'}
+            {showBalance ? `₦${profile.wallet_balance}` : '₦ xxx'}
           </p>
           <button
             type="button"
@@ -78,7 +78,6 @@ export default function Dashboard() {
       <RecentTransactions />
       
       <nav className="dashboard-nav">
-        {/* <Link to="/dashboard" className="nav-item">🏠 Home</Link> */}
         <Link to="/dashboard" className="nav-item active">🏠 Home</Link>
         <Link to="/fund" className="nav-item active">💳 Fund</Link>
         <Link to="/history" className="nav-item active">📜 History</Link>
