@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PasswordInput from './PasswordInput';
 import './ChangePassword.css';
 import { apiPost } from '../api';
-import { SUPPORT_WHATSAPP } from '../config';
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 
 export default function ChangePin() {
