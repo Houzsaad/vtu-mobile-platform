@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import PasswordInput from './PasswordInput';
 import './ChangePassword.css';
 import { apiPost } from '../api';
+import { SUPPORT_WHATSAPP } from '../config';
+
 
 export default function ChangePin() {
   const [formData, setFormData] = useState({

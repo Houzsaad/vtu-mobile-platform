@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { apiGet } from '../api';
 import './Profile.css';
 import ThemeToggle from './ThemeToggle';
+import { SUPPORT_WHATSAPP } from '../config';
 
 
 export default function Profile() {
@@ -72,7 +73,7 @@ export default function Profile() {
           🔢 Change transaction PIN
         </Link>
         <a
-          href="https://wa.me/2348121196405"
+          href={`https://wa.me/${SUPPORT_WHATSAPP}`}
           target="_blank"
           rel="noopener noreferrer"
           className="profile-action-item"
