@@ -5,6 +5,12 @@ from .validators import validate_full_name, validate_username
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from wallet.models import Wallet
 
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+
+User = get_user_model()
+
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, min_length=8)
@@ -151,3 +157,24 @@ class ChangePinSerializer(serializers.Serializer):
         user.set_pin(self.validated_data['new_pin'])
         user.save()
         return user
+
+
+class ForgotPasswordRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+class ForgotPasswordConfirmSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    code = serializers.RegexField(r"^\d{6}$", error_messages={"invalid": "Enter the 6-digit code."})
+    new_password = serializers.CharField(write_only=True)
+    confirm_new_password = serializers.CharField(write_only=True)
+
+    def validate_new_password(self, value):
+        validate_password(value)
+        return value
+
+    def validate(self, data):
+        if data["new_password"] != data["confirm_new_password"]:
+            raise serializers.ValidationError(
+                {"confirm_new_password": "Passwords do not match."})
+        return data

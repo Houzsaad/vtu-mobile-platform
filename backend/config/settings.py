@@ -114,6 +114,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
+    "DEFAULT_THROTTLE_RATES": {"password_reset": "5/hour"},
 }
 
 SIMPLE_JWT = {
@@ -143,3 +144,8 @@ FUNDING_MIN_AMOUNT = 100
 FUNDING_MAX_AMOUNT = 100000
 FUNDING_EXPIRY_MINUTES = 30      # default; clamped to 15 min – 8 hours
 USE_TZ = True
+
+
+APP_NAME = os.environ.get("APP_NAME", "VTU App")
+EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "no-reply@example.com")

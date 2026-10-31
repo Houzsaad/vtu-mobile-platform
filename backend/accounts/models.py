@@ -53,7 +53,7 @@ class OTPCode(models.Model):
     used_at = models.DateTimeField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    MAX_ATTEMPTS = 5
+    MAX_ATTEMPTS = 3
     LIFETIME = timedelta(minutes=10)
 
     @staticmethod
