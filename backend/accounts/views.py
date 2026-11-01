@@ -139,6 +139,7 @@ class ForgotPasswordConfirmView(APIView):
 
             user.set_password(d["new_password"])
             user.save(update_fields=["password"])
+            
             for token in OutstandingToken.objects.filter(user=user):
                 BlacklistedToken.objects.get_or_create(token=token)
 
