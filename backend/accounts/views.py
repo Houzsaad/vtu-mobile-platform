@@ -27,6 +27,8 @@ from rest_framework.views import APIView
 from .serializers import ForgotPasswordRequestSerializer
 from .serializers import ForgotPasswordConfirmSerializer
 
+from rest_framework_simplejwt.token_blacklist.models import BlacklistedToken, OutstandingToken
+
 from .models import OTPCode
 
 User = get_user_model()
@@ -137,6 +139,8 @@ class ForgotPasswordConfirmView(APIView):
 
             user.set_password(d["new_password"])
             user.save(update_fields=["password"])
+            for token in OutstandingToken.objects.filter(user=user):
+                BlacklistedToken.objects.get_or_create(token=token)
 
         return Response({"message": "Password reset successful. You can now log in."})
 
