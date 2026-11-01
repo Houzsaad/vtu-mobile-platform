@@ -10,6 +10,8 @@ import History from './components/History';
 import Airtime from './components/Airtime';
 import Data from './components/Data';
 import Fund from './components/Fund';
+import ForgotPassword from './components/ForgotPassword';
+
 
 function App() {
   useEffect(() => {
@@ -25,6 +27,7 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/change-password" element={<ChangePassword />} />
+      <Route path="/forgot-password" element={<ForgotPassword />} />
       <Route path="/change-pin" element={<ChangePin />} />
       <Route path="/history" element={<History />} />
       <Route path="/airtime" element={<Airtime />} />
