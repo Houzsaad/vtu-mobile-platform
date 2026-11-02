@@ -27,7 +27,9 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/profile" element={<Profile />} />
       <Route path="/change-password" element={<ChangePassword />} />
+      
       <Route path="/forgot-password" element={<ForgotPassword />} />
+
       <Route path="/change-pin" element={<ChangePin />} />
       <Route path="/history" element={<History />} />
       <Route path="/airtime" element={<Airtime />} />
