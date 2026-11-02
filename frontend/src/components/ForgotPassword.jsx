@@ -18,7 +18,7 @@ async function post(path, body) {
 export default function ForgotPassword() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(''); 
   const [form, setForm] = useState({ code: '', new_password: '', confirm_new_password: '' });
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState('');
