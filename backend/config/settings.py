@@ -116,6 +116,14 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
     "DEFAULT_THROTTLE_RATES": {"password_reset": "5/hour"},
+    "NUM_PROXIES": 1,
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "django_cache",
+    }
 }
 
 SIMPLE_JWT = {
