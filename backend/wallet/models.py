@@ -93,6 +93,8 @@ class DataPlan(models.Model):
     name = models.CharField(max_length=100)
     variation_code = models.CharField(max_length=50)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    plan_type = models.CharField(max_length=30, blank=True, db_index=True)
+    cost_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     updated_at = models.DateTimeField(auto_now=True)
 
