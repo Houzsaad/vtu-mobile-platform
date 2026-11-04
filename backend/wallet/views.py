@@ -112,5 +112,21 @@ class DataPurchaseView(APIView):
             'plan': txn.description,
             'reference': txn.reference,
         }, status=200)
+
+class DataPlanTypesView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        network = request.query_params.get("network", "").lower()
+        labels = (DataPlan.objects
+                  .filter(provider=settings.VTU_PROVIDER, is_active=True, network=network)
+                  .exclude(plan_type="")
+                  .values_list("plan_type", flat=True)
+                  .distinct())
+
+        seen = {}
+        for label in labels:
+            seen.setdefault(label.upper(), label)   # one entry per type, any casing
+        return Response(sorted(seen.values(), key=str.upper))
     
 # Create your views here.

@@ -38,15 +38,26 @@ class Command(BaseCommand):
             price = Decimal(str(p.get("priceForNormalUser") or 0))
             if not network or price <= 0:
                 continue
-            _, created = DataPlan.objects.get_or_create(
+
+            plan_type = str(p.get("dataType") or "").strip()
+            cost = Decimal(str(p.get("priceForApiUser") or price))
+
+            cost_field = getattr(settings, "DODODATA_PRICE_FIELD", "priceForNormalUser")
+            cost = Decimal(str(p.get(cost_field) or price))
+
+            obj, created = DataPlan.objects.get_or_create(
                 provider="dododata",
                 network=network,
                 variation_code=str(p["id"]),
                 defaults={
-                    "name": f'{p.get("title", "")} ({p.get("dataType", "")})',
+                    "name": f'{p.get("title", "")} ({plan_type})',
                     "price": price,
                     "is_active": False,
+                    "plan_type": plan_type,
+                    "cost_price": cost,
                 },
             )
+            if not created:
+                DataPlan.objects.filter(pk=obj.pk).update(plan_type=plan_type, cost_price=cost)
             added += created
-        self.stdout.write(f"{len(plans)} from DodoData, {added} new (inactive)")
+       

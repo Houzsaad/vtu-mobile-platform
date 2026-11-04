@@ -94,8 +94,8 @@ class TransactionAdmin(admin.ModelAdmin):
 
 @admin.register(DataPlan)
 class DataPlanAdmin(admin.ModelAdmin):
-    list_display = ('network', 'name', 'variation_code', 'price', 'is_active')
+    list_display = ('network', 'name', 'variation_code', 'price', 'is_active', 'plan_type', 'cost_price')
     list_editable = ('price', 'is_active')
-    list_filter = ('network', 'is_active')
+    list_filter = ('network', 'plan_type', 'is_active')
 
 # Register your models here.
