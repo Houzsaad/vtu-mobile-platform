@@ -1,0 +1,28 @@
+.data-summary {
+  display: flex;
+  flex-direction: column;
+  padding: 4px 14px;
+  border: 1px solid rgba(128, 128, 128, 0.25);
+  border-radius: 12px;
+}
+.data-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  font-size: 15px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.18);
+}
+.data-row:last-child { border-bottom: 0; }
+.data-row span { opacity: 0.7; }
+
+.data-contact-btn,
+.data-secondary {
+  padding: 10px;
+  font-size: 14px;
+  color: inherit;
+  background: transparent;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 12px;
+  cursor: pointer;
+}
