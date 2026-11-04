@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { apiPost } from '../api';
 import PasswordInput from './PasswordInput';
+import { canPickContact, pickContactNumber } from '../utils/phone';
 import './ChangePassword.css';
 
 const NETWORKS = [
@@ -26,6 +27,11 @@ export default function Airtime() {
       ? value.replace(/\D/g, '').slice(0, limits[name])
       : value;
     setFormData({ ...formData, [name]: clean });
+  };
+
+  const pickContact = async () => {
+    const number = await pickContactNumber();
+    if (number) setFormData((f) => ({ ...f, phone: number }));
   };
 
   const handleSubmit = async (e) => {
@@ -73,6 +79,13 @@ export default function Airtime() {
             value={formData.phone}
             onChange={handleChange}
           />
+
+          {canPickContact && (
+            <button type="button" className="data-contact-btn" onClick={pickContact}>
+              📇 Choose from contacts
+            </button>
+          )}
+          
           <input
             name="amount"
             placeholder="Amount (₦)"
