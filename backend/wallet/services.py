@@ -170,6 +170,29 @@ def settle_transaction(*, transaction_id, outcome, provider_reference='', raw=No
         txn.save()
         return txn
 
+def refund_failed(*, transaction_id):
+    """Refund a FAILED transaction that was never refunded. Safe to call twice."""
+    with db_transaction.atomic():
+        txn = Transaction.objects.select_for_update().get(pk=transaction_id)
+        if txn.status != Transaction.Status.FAILED or txn.refunded:
+            return txn
+
+        wallet = Wallet.objects.select_for_update().get(pk=txn.wallet_id)
+        balance_before = wallet.balance
+        wallet.balance += txn.amount
+        wallet.save(update_fields=['balance', 'updated_at'])
+        WalletEntry.objects.create(
+            wallet=wallet,
+            transaction=txn,
+            kind=WalletEntry.Kind.REFUND,
+            amount=txn.amount,
+            balance_before=balance_before,
+            balance_after=wallet.balance,
+        )
+        txn.refunded = True
+        txn.save(update_fields=['refunded', 'updated_at'])
+        return txn
+
 
 def purchase_airtime(*, wallet_id, network, phone, amount, reference=None):
     provider_name = settings.VTU_PROVIDER
