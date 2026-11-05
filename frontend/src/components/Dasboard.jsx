@@ -4,7 +4,6 @@ import { apiGet } from '../api';
 import './Dashboard.css';
 import RecentTransactions from './RecentTransactions';
 
-
 export default function Dashboard() {
   const [profile, setProfile] = useState(null);
   const [error, setError] = useState('');
@@ -38,6 +37,7 @@ export default function Dashboard() {
   return (
     <div className="dashboard-page">
       <header className="dashboard-header">
+        <AnnouncementBanner />
         <div>
           <p className="dashboard-greeting">Welcome</p>
           <p className="dashboard-name">{profile.full_name}</p>

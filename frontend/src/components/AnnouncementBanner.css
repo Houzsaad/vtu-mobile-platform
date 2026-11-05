@@ -1,0 +1,25 @@
+.announcements { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+
+.announcement {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  border: 1px solid transparent;
+}
+.announcement-text { display: flex; flex-direction: column; gap: 2px; }
+.announcement-close {
+  background: none;
+  border: 0;
+  font-size: 22px;
+  line-height: 1;
+  color: inherit;
+  cursor: pointer;
+}
+
+.announcement.info    { background: rgba(74, 111, 165, 0.15); border-color: rgba(74, 111, 165, 0.4); }
+.announcement.warning { background: rgba(217, 154, 0, 0.15);  border-color: rgba(217, 154, 0, 0.45); }
+.announcement.success { background: rgba(34, 160, 90, 0.15);  border-color: rgba(34, 160, 90, 0.4); }
