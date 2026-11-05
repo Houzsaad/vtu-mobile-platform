@@ -3,7 +3,6 @@ import { useNavigate, Link } from 'react-router-dom';
 import { apiGet } from '../api';
 import './Dashboard.css';
 import RecentTransactions from './RecentTransactions';
-AnnouncementBanner from './AnnouncementBanner';
 
 export default function Dashboard() {
   const [profile, setProfile] = useState(null);
