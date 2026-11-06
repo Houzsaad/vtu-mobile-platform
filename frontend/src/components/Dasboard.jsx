@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { apiGet } from '../api';
 import './Dashboard.css';
 import RecentTransactions from './RecentTransactions';
-import AnnouncementBanner from './AnnouncementBanner';
+// import AnnouncementBanner from './AnnouncementBanner';
 
 export default function Dashboard() {
   const [profile, setProfile] = useState(null);
@@ -38,7 +38,7 @@ export default function Dashboard() {
   return (
     <div className="dashboard-page">
       <header className="dashboard-header">
-        <AnnouncementBanner />
+        {/* <AnnouncementBanner /> */}
         <div>
           <p className="dashboard-greeting">Welcome</p>
           <p className="dashboard-name">{profile.full_name}</p>
