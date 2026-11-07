@@ -136,6 +136,19 @@ Shared tokens live in `src/index.css` (colors, radius, font) and are reused acro
 ### Transaction history
 <p align="center"><img src="trxn-history.png" width="390"/></p>
 
+
+### Buy Airtime
+<p align="center"><img src="buy-airtime.png" width="390"/></p>
+
+
+### Buy Data
+<p align="center"><img src="buy-data.png" width="390"/></p>
+
+
+### Fund Wallet
+<p align="center"><img src="fund-wallet.png" width="390"/></p>
+
+
 ## Known limitations
 
 - The contacts picker works only on browsers that support it (Chrome on Android, over HTTPS). Elsewhere the user types the number.
