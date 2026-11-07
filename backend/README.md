@@ -94,13 +94,13 @@ Create a `.env` file in `backend/` (never commit it). Names and purpose only:
 | `DEBUG` | `True` locally, `False` in production |
 | `DATABASE_URL` | PostgreSQL connection string |
 | `ALLOWED_HOSTS` | Allowed API hostnames |
-| `CORS_ALLOWED_ORIGINS` | The frontend's address (exact, no trailing slash) |
+| `CORS_ALLOWED_ORIGINS` | https://vtu-mobile-platform.vercel.app |
 | `VTU_PROVIDER` | Active provider: `dododata` or `vtpass` |
 | `DODODATA_BASE_URL`, `DODODATA_API_KEY` | DodoData access |
-| `DODODATA_PRICE_FIELD` | Which provider price counts as your cost (default `priceForNormalUser`) |
+| `DODODATA_PRICE_FIELD` | Which provider price counts as cost (default `priceForNormalUser`) |
 | `VTPASS_*` | VTPass access (if used) |
 | `PAYSTACK_SECRET_KEY` | Paystack secret key (test or live) |
-| `APP_NAME` | Name used in emails |
+| `APP_NAME` | VTU App |
 | `EMAIL_BACKEND`, `DEFAULT_FROM_EMAIL` | Email sending (console backend by default) |
 | `RESEND_API_KEY` | Resend key, once a domain is verified |
 | `ALLOW_TEST_FUNDING` | Leave unset in production |
