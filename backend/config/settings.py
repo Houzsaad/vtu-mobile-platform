@@ -159,3 +159,6 @@ USE_TZ = True
 APP_NAME = os.environ.get("APP_NAME", "VTU App")
 EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
 DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "no-reply@example.com")
+
+SMEPLUG_BASE_URL = os.environ.get("SMEPLUG_BASE_URL", "https://smeplug.ng/api/v1")
+SMEPLUG_SECRET_KEY = os.environ.get("SMEPLUG_SECRET_KEY", "")
