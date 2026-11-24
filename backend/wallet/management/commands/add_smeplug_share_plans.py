@@ -4,16 +4,16 @@ from django.core.management.base import BaseCommand
 
 from wallet.models import DataPlan
 
-# Your cost per GB from the vendor's figure (3,500 for 11GB). Change it in the admin if it differs.
-COST_PER_GB = Decimal("318")
+# # Your cost per GB from the vendor's figure (3,500 for 11GB). Change it in the admin if it differs.
+# COST_PER_GB = Decimal("318")
 
-# (SMEPlug code, size label, size in GB, example selling price)
-PLANS = [
-    ("517", "500MB", Decimal("0.5"), Decimal("250")),
-    ("518", "1GB", Decimal("1"), Decimal("390")),
-    ("519", "2GB", Decimal("2"), Decimal("750")),
-    ("520", "3GB", Decimal("3"), Decimal("1200")),
-]
+# # (SMEPlug code, size label, size in GB, example selling price)
+# PLANS = [
+#     ("517", "500MB", Decimal("0.5"), Decimal("250")),
+#     ("518", "1GB", Decimal("1"), Decimal("390")),
+#     ("519", "2GB", Decimal("2"), Decimal("750")),
+#     ("520", "3GB", Decimal("3"), Decimal("1200")),
+# ]
 
 
 class Command(BaseCommand):
