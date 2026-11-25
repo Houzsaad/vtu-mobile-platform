@@ -14,7 +14,7 @@ const NETWORKS = [
 
 const EMPTY = { phone: '', pin: '' };
 
-const cleanName = (name) => name.replace(/\s*\([^()]*\)\s*$/, '');
+//const cleanName = (name) => name.replace(/\s*\([^()]*\)\s*$/, '');
 
 // 08012345678, +2348012345678 and 8012345678 all become 08012345678
 function normalizePhone(raw) {
@@ -170,7 +170,7 @@ export default function Data() {
               <option value="">Select a plan</option>
               {plans.map((p) => (
                 <option key={p.id} value={p.id}>
-                  {cleanName(p.name)} - ₦{p.price}
+                  {p.name} - ₦{p.price}
                 </option>
               ))}
             </select>
@@ -198,7 +198,8 @@ export default function Data() {
           <form className="change-password-form" onSubmit={handleConfirm}>
             <div className="data-summary">
               <div className="data-row"><span>Network</span><strong>{networkLabel}</strong></div>
-              <div className="data-row"><span>Plan</span><strong>{cleanName(selectedPlan.name)}</strong></div>
+              {/* <div className="data-row"><span>Plan</span><strong>{cleanName(selectedPlan.name)}</strong></div> */}
+              <strong>{selectedPlan.name}</strong>
               <div className="data-row"><span>Phone</span><strong>{formData.phone}</strong></div>
               <div className="data-row"><span>Amount</span><strong>₦{selectedPlan.price}</strong></div>
             </div>
