@@ -19,7 +19,7 @@ def split_name(raw):
         return base, match.group(1).strip()
     if "share" in base.lower():
         return base, "Share"
-    return base, "Data"
+    return base, "SME Share"
 
 
 class Command(BaseCommand):
