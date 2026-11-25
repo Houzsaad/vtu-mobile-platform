@@ -75,6 +75,9 @@ class DataPlanListView(APIView):
         network = request.query_params.get('network')
         if network:
             plans = plans.filter(network=network)
+        plan_type = request.query_params.get('plan_type')
+        if plan_type:
+            plans = plans.filter(plan_type__iexact=plan_type)
         return Response(DataPlanSerializer(plans, many=True).data)
 
 
